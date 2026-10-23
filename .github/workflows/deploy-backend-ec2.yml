@@ -1,0 +1,91 @@
+name: Deploy Backend to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'server/**'
+      - '.github/workflows/deploy-backend-ec2.yml'
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Backend Test Suite
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: server/package-lock.json
+
+      - name: Install Dependencies
+        run: npm --prefix server ci
+
+      - name: Execute Tests
+        run: npm --prefix server test
+
+  deploy:
+    name: Deploy to EC2
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER || 'ubuntu' }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_PORT || 22 }}
+          script: |
+            set -e
+            APP_DIR="${{ secrets.EC2_APP_DIR || '/var/www/visa-server' }}"
+            
+            echo "==> Deploying backend to $APP_DIR on EC2..."
+            
+            # Ensure target directory exists
+            sudo mkdir -p "$APP_DIR"
+            sudo chown -R $USER:$USER "$APP_DIR"
+            
+            cd "$APP_DIR"
+
+            # If git repo already initialized, pull latest; otherwise clone
+            if [ -d .git ]; then
+              git fetch origin main
+              git reset --hard origin/main
+            else
+              git clone https://github.com/${{ github.repository }}.git .
+            fi
+
+            # Install production dependencies
+            cd server
+            npm ci --omit=dev
+
+            # Ensure .env exists with required production variables
+            if [ ! -f .env ]; then
+              echo "==> Creating initial production .env template..."
+              cp .env.example .env
+            fi
+
+            # Reload or start application with PM2 process manager
+            if pm2 list | grep -q "visa-server"; then
+              echo "==> Reloading visa-server with PM2 zero-downtime..."
+              pm2 reload ecosystem.config.js --env production || pm2 restart ecosystem.config.js --env production
+            else
+              echo "==> Starting visa-server with PM2..."
+              pm2 start ecosystem.config.js --env production
+            fi
+
+            pm2 save
+            echo "==> Backend deployment to EC2 completed successfully!"

@@ -1,0 +1,21 @@
+# Node dependencies
+node_modules/
+.npm/
+
+# Build artifacts
+dist/
+.vite-temp/
+.aws-sam/
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
