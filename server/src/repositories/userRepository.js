@@ -20,6 +20,7 @@ class UserRepository {
     passwordHash,
     role = ROLES.USER,
     hasLifetimeAccess = false,
+    activeSessionId = null,
   }) {
     const now = new Date().toISOString();
     const profileItem = {
@@ -31,6 +32,7 @@ class UserRepository {
       passwordHash,
       role,
       hasLifetimeAccess,
+      activeSessionId,
       createdAt: now,
       updatedAt: now,
     };
@@ -107,6 +109,27 @@ class UserRepository {
 
     // 2. Fetch user profile
     return this.findById(lookup.Item.userId);
+  }
+
+  async updateActiveSession(userId, activeSessionId) {
+    const now = new Date().toISOString();
+    const result = await docClient.send(
+      new UpdateCommand({
+        TableName: this.tableName,
+        Key: userKeys.profile(userId),
+        UpdateExpression: 'SET #activeSessionId = :sid, #updatedAt = :now',
+        ExpressionAttributeNames: {
+          '#activeSessionId': 'activeSessionId',
+          '#updatedAt': 'updatedAt',
+        },
+        ExpressionAttributeValues: {
+          ':sid': activeSessionId,
+          ':now': now,
+        },
+        ReturnValues: 'ALL_NEW',
+      })
+    );
+    return result.Attributes;
   }
 
   async updateEntitlement(userId, hasLifetimeAccess) {

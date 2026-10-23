@@ -39,9 +39,19 @@ async function request(endpoint, options = {}) {
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
+    if (response.status === 401 && (data.code === 'SESSION_REVOKED' || data.error === 'SessionRevoked')) {
+      setToken(null);
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(
+          new CustomEvent('session-revoked', {
+            detail: data.message || 'You have been logged out because your account was logged into from another device.',
+          })
+        );
+      }
+    }
     const error = new Error(data.message || 'An unexpected error occurred.');
     error.status = response.status;
-    error.code = data.error;
+    error.code = data.code || data.error;
     throw error;
   }
 

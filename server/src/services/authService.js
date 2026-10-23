@@ -10,12 +10,13 @@ const { validateRegistration, validateLogin } = require('../validators/schemas')
 const DUMMY_HASH = '$2a$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZ01234';
 
 class AuthService {
-  generateToken(user) {
+  generateToken(user, sessionId) {
     return jwt.sign(
       {
         userId: user.userId,
         email: user.email,
         role: user.role,
+        sessionId: sessionId || user.activeSessionId,
       },
       config.jwtSecret,
       { expiresIn: config.jwtExpiresIn }
@@ -33,6 +34,7 @@ class AuthService {
 
     const { emailNormalized } = validation.data;
     const userId = crypto.randomUUID();
+    const sessionId = crypto.randomUUID();
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
 
@@ -44,9 +46,10 @@ class AuthService {
       passwordHash,
       role: ROLES.USER,
       hasLifetimeAccess: false,
+      activeSessionId: sessionId,
     });
 
-    const token = this.generateToken(userProfile);
+    const token = this.generateToken(userProfile, sessionId);
     return { user: userProfile, token };
   }
 
@@ -72,8 +75,13 @@ class AuthService {
       throw err;
     }
 
+    // ponytail: enforce single active device by rotating sessionId on each login
+    const sessionId = crypto.randomUUID();
+    await userRepository.updateActiveSession(user.userId, sessionId);
+
     const { passwordHash: _, ...safeUser } = user;
-    const token = this.generateToken(safeUser);
+    safeUser.activeSessionId = sessionId;
+    const token = this.generateToken(safeUser, sessionId);
     return { user: safeUser, token };
   }
 

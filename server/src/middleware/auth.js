@@ -38,6 +38,16 @@ async function authenticate(req, res, next) {
       });
     }
 
+    // ponytail: single active session enforcement.
+    // If a newer session was established elsewhere, reject the stale session.
+    if (user.activeSessionId && decoded.sessionId && decoded.sessionId !== user.activeSessionId) {
+      return res.status(401).json({
+        error: 'SessionRevoked',
+        code: 'SESSION_REVOKED',
+        message: 'You have been logged out because this account was logged into from another device.',
+      });
+    }
+
     req.user = {
       userId: user.userId,
       email: user.email,
@@ -67,13 +77,17 @@ async function optionalAuthenticate(req, res, next) {
     const decoded = jwt.verify(token, config.jwtSecret);
     const user = await userRepository.findById(decoded.userId);
     if (user) {
-      req.user = {
-        userId: user.userId,
-        email: user.email,
-        name: user.name,
-        role: user.role,
-        hasLifetimeAccess: Boolean(user.hasLifetimeAccess),
-      };
+      if (user.activeSessionId && decoded.sessionId && decoded.sessionId !== user.activeSessionId) {
+        req.user = null;
+      } else {
+        req.user = {
+          userId: user.userId,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+          hasLifetimeAccess: Boolean(user.hasLifetimeAccess),
+        };
+      }
     } else {
       req.user = null;
     }

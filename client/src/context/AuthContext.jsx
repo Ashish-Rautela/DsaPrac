@@ -26,6 +26,14 @@ export function AuthProvider({ children }) {
     } else {
       setLoading(false);
     }
+
+    const handleSessionRevoked = (e) => {
+      setUser(null);
+      setToken(null);
+      alert(e.detail || 'You have been logged out because your account was logged into from another device.');
+    };
+    window.addEventListener('session-revoked', handleSessionRevoked);
+    return () => window.removeEventListener('session-revoked', handleSessionRevoked);
   }, []);
 
   const login = async (email, password) => {

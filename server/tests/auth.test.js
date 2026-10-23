@@ -144,4 +144,55 @@ describe('Authentication & User Management Tests', () => {
     assert.strictEqual(unauthRes.status, 401);
     assert.strictEqual(unauthRes.body.error, 'Unauthorized');
   });
+
+  it('enforces single-device login: logging in from a second device immediately invalidates previous device token', async () => {
+    // 1. Register user
+    await request(app)
+      .post('/api/auth/register')
+      .send({
+        name: 'Single Device User',
+        email: 'single@example.com',
+        password: 'SecurePassword123!',
+      });
+
+    // 2. Login from Device 1
+    const device1Login = await request(app)
+      .post('/api/auth/login')
+      .send({
+        email: 'single@example.com',
+        password: 'SecurePassword123!',
+      });
+    const device1Token = device1Login.body.token;
+    assert.ok(device1Token);
+
+    // Device 1 accesses /api/auth/me successfully
+    const device1CheckBefore = await request(app)
+      .get('/api/auth/me')
+      .set('Authorization', `Bearer ${device1Token}`);
+    assert.strictEqual(device1CheckBefore.status, 200);
+
+    // 3. Login from Device 2 with the same account
+    const device2Login = await request(app)
+      .post('/api/auth/login')
+      .send({
+        email: 'single@example.com',
+        password: 'SecurePassword123!',
+      });
+    const device2Token = device2Login.body.token;
+    assert.ok(device2Token);
+    assert.notStrictEqual(device1Token, device2Token);
+
+    // Device 2 accesses /api/auth/me successfully
+    const device2Check = await request(app)
+      .get('/api/auth/me')
+      .set('Authorization', `Bearer ${device2Token}`);
+    assert.strictEqual(device2Check.status, 200);
+
+    // 4. Device 1 tries to access /api/auth/me again -> REJECTED with SESSION_REVOKED
+    const device1CheckAfter = await request(app)
+      .get('/api/auth/me')
+      .set('Authorization', `Bearer ${device1Token}`);
+    assert.strictEqual(device1CheckAfter.status, 401);
+    assert.strictEqual(device1CheckAfter.body.code, 'SESSION_REVOKED');
+  });
 });
