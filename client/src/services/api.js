@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_URL || 'http://3.110.156.76/api';
+const API_BASE = import.meta.env.VITE_API_URL || 'https://visa.ashishrautela.in/api';
 
 export function getToken() {
   return localStorage.getItem('visaprep_token');
