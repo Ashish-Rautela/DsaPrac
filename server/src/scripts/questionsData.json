@@ -124,7 +124,7 @@
     "frequencyPercent": "87.5%",
     "acceptancePercent": "39.4%",
     "description": "Visa Online Assessment recurring problem pattern. Frequently appears in Visa SWE Intern & New Grad technical screenings. Tests core mastery of Array, Two Pointers, Sorting with strict time/space complexity bounds.\n\nAlgorithmic Breakdown & Key Takeaways:\n- Primary Data Structure: Array\n- Common Invariants: Identify monotonic properties, prefix state caching, or boundary constraints.\n- Optimized Complexity Target: Aim for O(N) or O(N log N) optimal runtime to avoid TLE on hidden edge cases.\n- LeetCode Reference: https://leetcode.com/problems/3sum",
-    "isPremium": true
+    "isPremium": false
   },
   {
     "questionId": "visa-lru-cache",
@@ -180,7 +180,7 @@
     "frequencyPercent": "100.0%",
     "acceptancePercent": "61.6%",
     "description": "Visa Online Assessment recurring problem pattern. Frequently appears in Visa SWE Intern & New Grad technical screenings. Tests core mastery of Array, Hash Table, Counting with strict time/space complexity bounds.\n\nAlgorithmic Breakdown & Key Takeaways:\n- Primary Data Structure: Array\n- Common Invariants: Identify monotonic properties, prefix state caching, or boundary constraints.\n- Optimized Complexity Target: Aim for O(N) or O(N log N) optimal runtime to avoid TLE on hidden edge cases.\n- LeetCode Reference: https://leetcode.com/problems/split-the-array",
-    "isPremium": true
+    "isPremium": false
   },
   {
     "questionId": "visa-best-time-to-buy-and-sell-stock",
@@ -197,7 +197,7 @@
     "frequencyPercent": "87.5%",
     "acceptancePercent": "57.0%",
     "description": "Visa Online Assessment recurring problem pattern. Frequently appears in Visa SWE Intern & New Grad technical screenings. Tests core mastery of Array, Dynamic Programming with strict time/space complexity bounds.\n\nAlgorithmic Breakdown & Key Takeaways:\n- Primary Data Structure: Array\n- Common Invariants: Identify monotonic properties, prefix state caching, or boundary constraints.\n- Optimized Complexity Target: Aim for O(N) or O(N log N) optimal runtime to avoid TLE on hidden edge cases.\n- LeetCode Reference: https://leetcode.com/problems/best-time-to-buy-and-sell-stock",
-    "isPremium": true
+    "isPremium": false
   },
   {
     "questionId": "visa-merge-intervals",
@@ -215,7 +215,7 @@
     "frequencyPercent": "75.0%",
     "acceptancePercent": "52.3%",
     "description": "Visa Online Assessment recurring problem pattern. Frequently appears in Visa SWE Intern & New Grad technical screenings. Tests core mastery of Array, Sorting, Quicksort with strict time/space complexity bounds.\n\nAlgorithmic Breakdown & Key Takeaways:\n- Primary Data Structure: Array\n- Common Invariants: Identify monotonic properties, prefix state caching, or boundary constraints.\n- Optimized Complexity Target: Aim for O(N) or O(N log N) optimal runtime to avoid TLE on hidden edge cases.\n- LeetCode Reference: https://leetcode.com/problems/merge-intervals",
-    "isPremium": true
+    "isPremium": false
   },
   {
     "questionId": "visa-block-placement-queries",
@@ -272,7 +272,7 @@
     "frequencyPercent": "75.0%",
     "acceptancePercent": "72.9%",
     "description": "Visa Online Assessment recurring problem pattern. Frequently appears in Visa SWE Intern & New Grad technical screenings. Tests core mastery of Array, Hash Table, String, Sorting with strict time/space complexity bounds.\n\nAlgorithmic Breakdown & Key Takeaways:\n- Primary Data Structure: Array\n- Common Invariants: Identify monotonic properties, prefix state caching, or boundary constraints.\n- Optimized Complexity Target: Aim for O(N) or O(N log N) optimal runtime to avoid TLE on hidden edge cases.\n- LeetCode Reference: https://leetcode.com/problems/group-anagrams",
-    "isPremium": true
+    "isPremium": false
   },
   {
     "questionId": "visa-create-target-array-in-the-given-order",

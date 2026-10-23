@@ -85,8 +85,14 @@ class QuestionService {
       filtered = filtered.filter((item) => item.topics && item.topics.includes(topic));
     }
 
-    // Sort primarily by Frequency descending, then difficulty, then title
+    // ponytail: Group all free starter questions first so they are compiled on Page 1,
+    // followed by premium questions ranked by interview frequency.
     filtered.sort((a, b) => {
+      // Free starter questions first
+      const aPrem = a.isPremium ? 1 : 0;
+      const bPrem = b.isPremium ? 1 : 0;
+      if (aPrem !== bPrem) return aPrem - bPrem;
+
       const freqA = typeof a.frequency === 'number' ? a.frequency : parseFloat(a.frequency) || 0;
       const freqB = typeof b.frequency === 'number' ? b.frequency : parseFloat(b.frequency) || 0;
       if (freqB !== freqA) return freqB - freqA;

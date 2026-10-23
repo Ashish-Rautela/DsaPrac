@@ -50,16 +50,20 @@ describe('Questions & Entitlement Protection Tests', () => {
     await userRepository.updateEntitlement(paidReg.body.user.userId, true);
   });
 
-  it('lists questions with 3 free questions and blurred names for all premium questions', async () => {
+  it('lists questions with 8 free starter questions grouped on page 1 and blurred names for all premium questions', async () => {
     const res = await request(app).get('/api/questions?limit=100');
     assert.strictEqual(res.status, 200);
     assert.ok(res.body.questions.length > 0);
     assert.strictEqual(res.body.hasFullAccess, false);
 
-    // Verify free questions (2-3) have unblurred titles and are not premium
+    // Verify free questions (8 questions) have unblurred titles and are not premium
     const freeQuestions = res.body.questions.filter((q) => !q.isPremium);
-    assert.ok(freeQuestions.length >= 2 && freeQuestions.length <= 4);
+    assert.ok(freeQuestions.length >= 8 && freeQuestions.length <= 10);
     assert.ok(freeQuestions.every((q) => !q.isBlurred));
+
+    // Verify all free questions appear before any premium questions (compiled on page 1)
+    const firstPremiumIndex = res.body.questions.findIndex((q) => q.isPremium);
+    assert.strictEqual(firstPremiumIndex, freeQuestions.length);
 
     // Verify premium questions are blurred and masked (real titles and links withheld)
     const premiumQuestions = res.body.questions.filter((q) => q.isPremium);
