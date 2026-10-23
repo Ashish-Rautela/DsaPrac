@@ -74,7 +74,8 @@ class S3Service {
       return `https://${this.bucket}.s3.${this.region}.amazonaws.com/${key}`;
     } catch (err) {
       console.error('[S3] Failed to upload screenshot to S3:', err.message);
-      throw new Error(`Failed to upload payment proof to S3: ${err.message}`);
+      console.warn('[S3] Falling back to direct image data to ensure payment submission succeeds.');
+      return base64Data;
     }
   }
 }

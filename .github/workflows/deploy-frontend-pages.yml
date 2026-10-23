@@ -45,7 +45,7 @@ jobs:
           # If your repository is https://username.github.io/Visa, base is /Visa/
           # If you attach a custom domain (e.g. visaprep.com), set VITE_BASE_PATH: / in repo variables
           VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || format('/{0}/', github.event.repository.name) }}
-          VITE_API_URL: ${{ secrets.VITE_API_URL || vars.VITE_API_URL || 'http://localhost:5000/api' }}
+          VITE_API_URL: ${{ secrets.VITE_API_URL || vars.VITE_API_URL || 'http://3.110.156.76/api' }}
         run: npm --prefix client run build
 
       - name: Enable SPA Routing for GitHub Pages (404 Fallback)

@@ -1,4 +1,4 @@
-const { DynamoDBClient, CreateTableCommand, DescribeTableCommand } = require('@aws-sdk/client-dynamodb');
+const { DynamoDBClient, CreateTableCommand, DescribeTableCommand, waitUntilTableExists } = require('@aws-sdk/client-dynamodb');
 const config = require('../config/env');
 
 async function createTableIfNotExists(client, params) {
@@ -9,7 +9,9 @@ async function createTableIfNotExists(client, params) {
     if (err.name === 'ResourceNotFoundException') {
       console.log(`Creating table '${params.TableName}'...`);
       await client.send(new CreateTableCommand(params));
-      console.log(`Table '${params.TableName}' created.`);
+      console.log(`Waiting for table '${params.TableName}' to become ACTIVE...`);
+      await waitUntilTableExists({ client, maxWaitTime: 120 }, { TableName: params.TableName });
+      console.log(`Table '${params.TableName}' is now ACTIVE.`);
     } else {
       throw err;
     }

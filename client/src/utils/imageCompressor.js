@@ -3,7 +3,7 @@
  * Ensures uploaded payment receipts/screenshots are lightweight (<150KB),
  * upload in milliseconds, and fit comfortably within database limits.
  */
-export function compressImage(file, maxWidth = 1200, maxHeight = 1200, quality = 0.75) {
+export function compressImage(file, maxWidth = 800, maxHeight = 800, quality = 0.65) {
   return new Promise((resolve, reject) => {
     if (!file) {
       return reject(new Error('No file provided.'));
@@ -13,9 +13,9 @@ export function compressImage(file, maxWidth = 1200, maxHeight = 1200, quality =
       return reject(new Error('Please upload an image file (PNG, JPG, or WEBP).'));
     }
 
-    // Limit original file size to 15MB before client compression
-    if (file.size > 15 * 1024 * 1024) {
-      return reject(new Error('File size exceeds 15MB. Please choose a smaller image.'));
+    // Limit original file size to 25MB before client compression
+    if (file.size > 25 * 1024 * 1024) {
+      return reject(new Error('File size exceeds 25MB. Please choose a smaller image.'));
     }
 
     const reader = new FileReader();
@@ -42,10 +42,15 @@ export function compressImage(file, maxWidth = 1200, maxHeight = 1200, quality =
         ctx.drawImage(img, 0, 0, width, height);
 
         const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+        
+        // Calculate approximate size of compressed dataURL in bytes
+        const compressedBytes = Math.round((compressedDataUrl.length * 3) / 4);
+
         resolve({
           dataUrl: compressedDataUrl,
           originalName: file.name,
           originalSize: file.size,
+          compressedSize: compressedBytes,
           width,
           height,
         });

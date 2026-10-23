@@ -24,7 +24,7 @@ import {
 } from 'lucide-react';
 
 export default function CheckoutPage() {
-  const { user, hasLifetimeAccess, refreshUser } = useAuth();
+  const { user, isAuthenticated, hasLifetimeAccess, refreshUser } = useAuth();
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
@@ -90,6 +90,11 @@ export default function CheckoutPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    if (!user) {
+      navigate('/login', { state: { from: '/checkout' } });
+      return;
+    }
 
     if (!screenshot && !utr.trim()) {
       setError('Please upload your payment screenshot or enter your 12-digit UTR reference.');

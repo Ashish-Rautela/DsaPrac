@@ -22,10 +22,8 @@ function errorHandler(err, req, res, next) {
   }
 
   res.status(status).json({
-    error: err.code || 'ServerError',
-    message: status >= 500 && config.nodeEnv === 'production'
-      ? 'An unexpected error occurred. Please try again later.'
-      : message,
+    error: err.code || err.name || 'ServerError',
+    message: err.message || message,
   });
 }
 
