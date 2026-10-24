@@ -36,6 +36,11 @@ export default function AdminDashboardPage() {
   const [screenshotModalPayment, setScreenshotModalPayment] = useState(null);
   const [rejectionReason, setRejectionReason] = useState('UTR not found in bank statement for ₹20.');
 
+  // Auto-refresh state
+  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState(null);
+
   // Questions state
   const [questions, setQuestions] = useState([]);
   const [questionsLoading, setQuestionsLoading] = useState(true);
@@ -57,17 +62,22 @@ export default function AdminDashboardPage() {
     setTimeout(() => setNotification(null), 4000);
   };
 
-  const loadPayments = async () => {
-    setPaymentsLoading(true);
+  const loadPayments = async (silent = false) => {
+    if (!silent) setPaymentsLoading(true);
+    setIsRefreshing(true);
     try {
       const data = await paymentApi.listAdminPayments(
         paymentFilter === 'all' ? null : paymentFilter
       );
       setPayments(data.payments || []);
+      setLastUpdated(new Date());
     } catch (err) {
-      showNotification('error', err.message || 'Failed to load payments.');
+      if (!silent) {
+        showNotification('error', err.message || 'Failed to load payments.');
+      }
     } finally {
-      setPaymentsLoading(false);
+      if (!silent) setPaymentsLoading(false);
+      setIsRefreshing(false);
     }
   };
 
@@ -90,6 +100,19 @@ export default function AdminDashboardPage() {
       loadQuestions();
     }
   }, [activeTab, paymentFilter]);
+
+  // Background Auto-Refresh interval (every 5 seconds)
+  useEffect(() => {
+    if (activeTab !== 'payments' || !autoRefresh) return;
+
+    const interval = setInterval(() => {
+      // Don't auto-fetch if modal is open or an action is currently processing
+      if (rejectModalPayment || screenshotModalPayment || actionLoadingId) return;
+      loadPayments(true);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [activeTab, autoRefresh, paymentFilter, rejectModalPayment, screenshotModalPayment, actionLoadingId]);
 
   // Payment approval
   const handleApprove = async (paymentId) => {
@@ -270,13 +293,46 @@ export default function AdminDashboardPage() {
               ))}
             </div>
 
-            <button
-              onClick={loadPayments}
-              className="text-xs text-slate-600 hover:text-slate-900 flex items-center space-x-1 font-semibold"
-            >
-              <RefreshCw className="w-3.5 h-3.5" />
-              <span>Refresh</span>
-            </button>
+            <div className="flex items-center space-x-2.5">
+              {/* Auto-Refresh Toggle */}
+              <button
+                type="button"
+                onClick={() => setAutoRefresh((prev) => !prev)}
+                className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition ${
+                  autoRefresh
+                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
+                    : 'bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200'
+                }`}
+                title="Toggle 5-second automatic background polling"
+              >
+                <span className="flex h-2 w-2 relative flex-shrink-0">
+                  {autoRefresh ? (
+                    <>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </>
+                  ) : (
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-slate-400"></span>
+                  )}
+                </span>
+                <span>Auto-Refresh: {autoRefresh ? 'ON (5s)' : 'PAUSED'}</span>
+              </button>
+
+              {/* Manual Refresh Button */}
+              <button
+                onClick={() => loadPayments(false)}
+                disabled={isRefreshing}
+                className="text-xs text-slate-600 hover:text-slate-900 flex items-center space-x-1.5 font-semibold px-3 py-1.5 rounded-xl hover:bg-slate-100 transition active:scale-95 disabled:opacity-50"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-blue-600' : ''}`} />
+                <span>Refresh</span>
+                {lastUpdated && (
+                  <span className="text-[11px] text-slate-400 hidden md:inline">
+                    ({lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })})
+                  </span>
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Payments Table */}
