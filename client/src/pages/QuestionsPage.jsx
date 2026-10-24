@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { questionApi, progressApi } from '../services/api';
+import { useCountdown } from '../utils/useCountdown';
 import {
   Search,
   Filter,
@@ -16,6 +17,7 @@ import {
   Percent,
   AlertCircle,
   Layers,
+  Clock,
 } from 'lucide-react';
 
 const POPULAR_TOPICS = [
@@ -41,6 +43,7 @@ const POPULAR_TOPICS = [
 
 export default function QuestionsPage() {
   const { user, isAuthenticated, hasLifetimeAccess } = useAuth();
+  const { formatted } = useCountdown();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [questions, setQuestions] = useState([]);
@@ -163,13 +166,17 @@ export default function QuestionsPage() {
         </div>
 
         {!hasLifetimeAccess && (
-          <div className="flex-shrink-0 bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:max-w-xs space-y-2">
+          <div className="flex-shrink-0 bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:max-w-xs space-y-2.5">
             <div className="flex items-center space-x-2 text-amber-900 font-bold text-sm">
               <Sparkles className="w-4 h-4 text-amber-500" />
               <span>Unlock All 160+ Questions</span>
             </div>
-            <p className="text-xs text-amber-700">
-              Only ₹20 for permanent lifetime access to all premium questions, LeetCode links, and algorithmic notes.
+            <div className="flex items-center space-x-1.5 text-xs text-rose-700 font-bold bg-rose-50 border border-rose-200 px-2 py-1 rounded-lg">
+              <Clock className="w-3.5 h-3.5 text-rose-600 animate-pulse flex-shrink-0" />
+              <span>Price rises to ₹100 in {formatted}</span>
+            </div>
+            <p className="text-xs text-amber-800">
+              Only ₹20 for permanent lifetime access. Buy fast before deadline!
             </p>
             <Link
               to="/checkout"

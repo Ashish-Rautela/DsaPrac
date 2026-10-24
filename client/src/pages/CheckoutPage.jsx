@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { paymentApi } from '../services/api';
 import { compressImage } from '../utils/imageCompressor';
+import { useCountdown } from '../utils/useCountdown';
 import qr1 from '../assets/qr/qr1.jpg';
 import qr2 from '../assets/qr/qr2.jpg';
 import {
@@ -25,6 +26,7 @@ import {
 
 export default function CheckoutPage() {
   const { user, isAuthenticated, hasLifetimeAccess, refreshUser } = useAuth();
+  const { formatted } = useCountdown();
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
@@ -160,6 +162,27 @@ export default function CheckoutPage() {
         <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
           Pay ₹20 on <strong>either of the two QR codes</strong> below, upload your payment screenshot, and wait for admin approval to get full lifetime access.
         </p>
+
+        {/* 5-Hour Deadline Countdown Banner */}
+        <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-amber-950 shadow-sm">
+          <div className="flex items-center space-x-3 text-left">
+            <div className="w-10 h-10 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center flex-shrink-0 font-bold shadow-sm">
+              <Clock className="w-5 h-5 animate-pulse" />
+            </div>
+            <div>
+              <div className="font-extrabold text-sm sm:text-base text-slate-900 flex items-center space-x-2">
+                <span>Special ₹20 Launch Offer Ending!</span>
+                <span className="text-[10px] bg-rose-100 text-rose-800 px-2 py-0.5 rounded-full font-bold">5h Deadline</span>
+              </div>
+              <p className="text-xs text-slate-600 mt-0.5">
+                Subscription will increase to <strong className="font-bold text-slate-900">₹100</strong> once the countdown ends. Buy fast!
+              </p>
+            </div>
+          </div>
+          <div className="bg-slate-950 text-amber-400 font-mono font-bold text-sm px-3.5 py-1.5 rounded-xl shadow-inner whitespace-nowrap">
+            {formatted}
+          </div>
+        </div>
       </div>
 
       {successSubmission ? (

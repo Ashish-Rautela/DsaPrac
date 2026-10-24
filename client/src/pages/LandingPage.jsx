@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useCountdown } from '../utils/useCountdown';
 import { questionApi } from '../services/api';
 import {
   Code2,
@@ -14,10 +15,12 @@ import {
   ExternalLink,
   ChevronRight,
   Terminal,
+  Clock,
 } from 'lucide-react';
 
 export default function LandingPage() {
   const { isAuthenticated, hasLifetimeAccess } = useAuth();
+  const { formatted } = useCountdown();
   const [previewQuestions, setPreviewQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -193,21 +196,29 @@ export default function LandingPage() {
           <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-visa-gold/10 blur-3xl pointer-events-none"></div>
 
           <div className="text-center max-w-xl mx-auto space-y-4">
-            <span className="text-xs font-bold uppercase tracking-widest text-visa-gold">Simple, Fair Pricing</span>
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-rose-500/20 border border-rose-400/30 text-rose-300 text-xs font-bold animate-pulse">
+              <Clock className="w-3.5 h-3.5 text-rose-400" />
+              <span>5-Hour Deadline Active • Price increases to ₹100 in {formatted}!</span>
+            </div>
+
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
               One-Time ₹20. Lifetime Access.
             </h2>
             <p className="text-slate-300 text-sm leading-relaxed">
-              No recurrent monthly subscriptions, no tiers. Full unlock of all present and future curated Visa OA questions.
+              Limited launch price. Once the timer expires, price becomes ₹100. Full unlock of all present and future curated Visa OA questions.
             </p>
 
             <div className="py-6">
               <div className="inline-block bg-white/10 backdrop-blur-md rounded-2xl px-8 py-4 border border-white/20">
-                <div className="flex items-baseline justify-center space-x-2">
-                  <span className="text-4xl sm:text-5xl font-black text-white">₹20</span>
+                <div className="flex items-baseline justify-center space-x-3">
+                  <span className="text-2xl sm:text-3xl text-slate-400 line-through font-bold">₹100</span>
+                  <span className="text-4xl sm:text-5xl font-black text-visa-gold">₹20</span>
                   <span className="text-slate-300 text-sm font-medium">/ lifetime</span>
                 </div>
-                <p className="text-xs text-amber-300 mt-1">One-time UPI payment</p>
+                <div className="mt-2 flex items-center justify-center space-x-2">
+                  <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-xs font-bold">Save 80%</span>
+                  <span className="text-xs text-amber-300">Price will be ₹100 after deadline</span>
+                </div>
               </div>
             </div>
 
