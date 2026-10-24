@@ -49,7 +49,7 @@ function MiniZenBear() {
 
 export default function LandingPage() {
   const { isAuthenticated, hasLifetimeAccess } = useAuth();
-  const { formatted } = useCountdown();
+  const { hours, minutes, seconds } = useCountdown();
   const [previewQuestions, setPreviewQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -272,13 +272,17 @@ export default function LandingPage() {
       {/* Transparent Pricing Bento Card */}
       <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_12px_40px_rgba(0,0,0,0.04)] p-8 sm:p-12 text-slate-900 relative overflow-hidden text-center space-y-6">
-          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-red-50 border border-red-200 text-red-600 text-xs font-black shadow-xs">
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 px-4 py-2 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs font-black shadow-xs">
             <span className="flex h-2 w-2 relative flex-shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
             </span>
-            <span className="uppercase tracking-wider">Limited Offer:</span>
-            <span>Price jumps to ₹100 in {formatted}!</span>
+            <span className="uppercase tracking-wider text-red-600">⚠️ FLASH OFFER:</span>
+            <span>Price jumps to ₹100 in</span>
+            <span className="inline-flex items-center gap-0.5 bg-slate-950 text-amber-300 font-mono text-xs px-2 py-0.5 rounded-lg border border-amber-400/30 font-bold">
+              {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+            </span>
+            <span className="text-red-600 font-black">— Only 4 spots left at ₹20!</span>
           </div>
 
           <div className="space-y-2 max-w-xl mx-auto">

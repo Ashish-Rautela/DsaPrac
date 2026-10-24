@@ -26,7 +26,7 @@ import {
 
 export default function CheckoutPage() {
   const { user, isAuthenticated, hasLifetimeAccess, refreshUser } = useAuth();
-  const { formatted } = useCountdown();
+  const { hours, minutes, seconds } = useCountdown();
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
@@ -164,26 +164,31 @@ export default function CheckoutPage() {
         </p>
 
         {/* 5-Hour Deadline Countdown Banner */}
-        <div className="bg-white border border-red-200/80 rounded-3xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-800 shadow-[0_4px_16px_rgba(239,68,68,0.06)]">
+        <div className="bg-white border-2 border-red-200 rounded-3xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-800 shadow-[0_6px_20px_rgba(239,68,68,0.12)]">
           <div className="flex items-center space-x-3 text-left">
-            <div className="w-10 h-10 rounded-2xl bg-red-50 text-red-600 border border-red-200/70 flex items-center justify-center flex-shrink-0 font-bold shadow-xs">
-              <Clock className="w-5 h-5 animate-pulse" />
+            <div className="w-11 h-11 rounded-2xl bg-red-100 text-red-600 border border-red-200 flex items-center justify-center flex-shrink-0 font-bold shadow-xs">
+              <Clock className="w-6 h-6 animate-pulse text-red-600" />
             </div>
             <div>
-              <div className="font-extrabold text-sm sm:text-base text-slate-900 flex items-center space-x-2">
-                <span className="text-[11px] uppercase font-black bg-red-50 text-red-600 border border-red-200 px-2 py-0.5 rounded-full flex items-center gap-1 shadow-xs">
-                  <span className="flex h-1.5 w-1.5 rounded-full bg-red-600 animate-ping"></span>
-                  Limited Offer
+              <div className="font-extrabold text-sm sm:text-base text-slate-900 flex items-center flex-wrap gap-2">
+                <span className="text-[11px] uppercase font-black bg-red-600 text-white px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-xs animate-pulse">
+                  <span className="flex h-1.5 w-1.5 rounded-full bg-white animate-ping"></span>
+                  PRICE JUMPS SOON
                 </span>
-                <span>Special ₹20 Launch Offer Ending!</span>
+                <span>Lock in ₹20 Before It Jumps to ₹100!</span>
               </div>
-              <p className="text-xs text-slate-500 mt-0.5">
-                Subscription will increase to <strong className="font-bold text-red-600">₹100</strong> once the countdown ends. Buy fast!
+              <p className="text-xs text-slate-600 mt-1">
+                🔥 <strong className="text-red-600 font-black">Only 4 slots left</strong> at this discounted ₹20 rate. Price increases to <span className="line-through text-slate-400">₹100</span> permanently once the timer hits 00:00!
               </p>
             </div>
           </div>
-          <div className="bg-red-50 border border-red-200/80 text-red-700 font-mono font-bold text-sm px-3.5 py-1.5 rounded-xl whitespace-nowrap shadow-xs">
-            {formatted}
+          <div className="flex items-center gap-1 bg-slate-950 px-3 py-1.5 rounded-xl border border-red-900/50 shadow-inner font-mono text-sm flex-shrink-0">
+            <span className="text-[10px] text-amber-400/90 font-sans font-bold uppercase tracking-wider hidden sm:inline mr-1">Time Left:</span>
+            <span className="text-amber-300 font-black">{String(hours).padStart(2, '0')}</span>
+            <span className="text-amber-400 font-black animate-pulse">:</span>
+            <span className="text-amber-300 font-black">{String(minutes).padStart(2, '0')}</span>
+            <span className="text-amber-400 font-black animate-pulse">:</span>
+            <span className="text-amber-300 font-black">{String(seconds).padStart(2, '0')}</span>
           </div>
         </div>
       </div>
