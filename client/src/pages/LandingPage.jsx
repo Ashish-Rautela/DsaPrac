@@ -51,19 +51,27 @@ export default function LandingPage() {
               160+ actual assessment problems with LeetCode mappings, interview appearance frequencies, algorithmic intuition, and pattern breakdowns — all for ₹20 lifetime access.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-4">
               <Link
                 to="/questions"
-                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-visa-blue text-white font-bold text-base hover:bg-visa-lightBlue transition shadow-lg shadow-blue-900/10 flex items-center justify-center space-x-2"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-visa-blue text-white font-bold text-base hover:bg-visa-lightBlue transition shadow-lg shadow-blue-900/10 flex items-center justify-center space-x-2"
               >
                 <span>Browse Question Bank</span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
 
+              <Link
+                to="/prep-plan"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white border-2 border-slate-200 hover:border-visa-blue hover:bg-blue-50/50 text-slate-800 hover:text-visa-blue font-bold text-base transition shadow-sm flex items-center justify-center space-x-2"
+              >
+                <BookOpen className="w-5 h-5 text-visa-blue" />
+                <span>Check Prep Plan</span>
+              </Link>
+
               {!hasLifetimeAccess && (
                 <Link
                   to={isAuthenticated ? '/checkout' : '/register'}
-                  className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-base transition shadow-sm flex items-center justify-center space-x-2"
+                  className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-base transition shadow-sm flex items-center justify-center space-x-2"
                 >
                   <Zap className="w-5 h-5 text-slate-950" />
                   <span>Unlock Lifetime Access — ₹20</span>
