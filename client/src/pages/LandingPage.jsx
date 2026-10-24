@@ -47,30 +47,6 @@ function MiniZenBear() {
   );
 }
 
-// Visa Logo-styled Wordmark for headline
-function VisaOALogoText() {
-  return (
-    <span className="inline-flex items-baseline font-black italic tracking-tighter text-[#1A1F71] select-none whitespace-nowrap align-baseline pl-1">
-      <span className="relative inline-flex items-baseline">
-        {/* Visa signature golden wing on the left corner of V */}
-        <svg
-          viewBox="0 0 20 18"
-          className="absolute -top-[0.12em] -left-[0.3em] w-[0.54em] h-[0.5em] text-[#F7B600] pointer-events-none fill-current drop-shadow-xs"
-          aria-hidden="true"
-        >
-          <path d="M0 0 L18 0 L12 16 C9 8 5 3 0 0 Z" />
-        </svg>
-        <span className="text-[#1A1F71]">V</span>
-        <span className="text-[#1A1F71]">ISA</span>
-      </span>
-      <span className="ml-2.5 text-[#1A1F71] relative inline-block">
-        OA
-        <span className="absolute -bottom-1 sm:-bottom-1.5 left-0 right-0 h-[3.5px] sm:h-[4.5px] bg-[#F7B600] rounded-full shadow-xs" />
-      </span>
-    </span>
-  );
-}
-
 export default function LandingPage() {
   const { isAuthenticated, hasLifetimeAccess } = useAuth();
   const { formatted } = useCountdown();
@@ -97,7 +73,10 @@ export default function LandingPage() {
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
-              Master the Exact Questions of the <VisaOALogoText />
+              Master the Exact Questions of the{' '}
+              <span className="text-[#1A1F71] italic font-black underline decoration-[#F7B600] decoration-4 sm:decoration-[6px] underline-offset-[6px] sm:underline-offset-[8px] whitespace-nowrap">
+                Visa OA
+              </span>
             </h1>
 
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal max-w-2xl mx-auto">
