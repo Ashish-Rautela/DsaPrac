@@ -326,9 +326,9 @@ export default function AdminDashboardPage() {
                                 <img
                                   src={p.screenshot}
                                   alt="Proof thumbnail"
-                                  className="w-10 h-10 object-cover rounded-lg border border-slate-200 bg-slate-50 group-hover:border-visa-blue shadow-xs"
+                                  className="w-10 h-10 object-cover rounded-xl border border-slate-200 bg-slate-50 group-hover:border-blue-500 shadow-xs"
                                 />
-                                <span className="inline-flex items-center text-[11px] font-semibold text-visa-blue group-hover:underline">
+                                <span className="inline-flex items-center text-[11px] font-semibold text-blue-600 group-hover:underline">
                                   <Eye className="w-3 h-3 mr-1" />
                                   Inspect
                                 </span>
@@ -425,7 +425,7 @@ export default function AdminDashboardPage() {
                 });
                 setQuestionModalOpen(true);
               }}
-              className="px-4 py-2 rounded-xl bg-visa-blue hover:bg-visa-lightBlue text-white font-bold text-xs transition flex items-center space-x-1.5 shadow-sm"
+              className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition flex items-center space-x-1.5 shadow-sm"
             >
               <Plus className="w-4 h-4" />
               <span>Add Question</span>
@@ -508,7 +508,7 @@ export default function AdminDashboardPage() {
                 rows={3}
                 value={rejectionReason}
                 onChange={(e) => setRejectionReason(e.target.value)}
-                className="w-full p-3 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-visa-blue/20"
+                className="w-full p-3 rounded-xl border border-slate-200 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
               />
             </div>
 
@@ -559,7 +559,7 @@ export default function AdminDashboardPage() {
                   value={questionFormData.title}
                   onChange={(e) => setQuestionFormData({ ...questionFormData, title: e.target.value })}
                   placeholder="e.g. Transaction Sliding Window Maximum"
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:outline-none focus:ring-2 focus:ring-visa-blue/20"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
                 />
               </div>
 
@@ -571,7 +571,7 @@ export default function AdminDashboardPage() {
                   <select
                     value={questionFormData.difficulty}
                     onChange={(e) => setQuestionFormData({ ...questionFormData, difficulty: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs bg-white"
                   >
                     <option value="Easy">Easy</option>
                     <option value="Medium">Medium</option>
@@ -588,7 +588,7 @@ export default function AdminDashboardPage() {
                       type="checkbox"
                       checked={questionFormData.isPremium}
                       onChange={(e) => setQuestionFormData({ ...questionFormData, isPremium: e.target.checked })}
-                      className="w-4 h-4 rounded text-visa-blue"
+                      className="w-4 h-4 rounded text-blue-600"
                     />
                     <span className="font-semibold text-slate-800">
                       {questionFormData.isPremium ? 'Premium (Locked for ₹20)' : 'Free Starter'}
@@ -606,7 +606,7 @@ export default function AdminDashboardPage() {
                   value={questionFormData.topics}
                   onChange={(e) => setQuestionFormData({ ...questionFormData, topics: e.target.value })}
                   placeholder="Arrays, Sliding Window, Monotonic Queue"
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs"
                 />
               </div>
 
@@ -619,7 +619,7 @@ export default function AdminDashboardPage() {
                   value={questionFormData.leetcodeUrl}
                   onChange={(e) => setQuestionFormData({ ...questionFormData, leetcodeUrl: e.target.value })}
                   placeholder="https://leetcode.com/problems/..."
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs"
                 />
               </div>
 
@@ -632,7 +632,7 @@ export default function AdminDashboardPage() {
                   value={questionFormData.description}
                   onChange={(e) => setQuestionFormData({ ...questionFormData, description: e.target.value })}
                   placeholder="Explain optimal data structure, invariant preservation, and time/space complexity analysis..."
-                  className="w-full p-3 rounded-xl border border-slate-300 text-xs font-mono"
+                  className="w-full p-3 rounded-xl border border-slate-200 text-xs font-mono"
                 />
               </div>
 
@@ -646,7 +646,7 @@ export default function AdminDashboardPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl font-bold bg-visa-blue text-white hover:bg-visa-lightBlue shadow-sm"
+                  className="px-5 py-2 rounded-2xl font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-[0_4px_14px_rgba(59,130,246,0.3)]"
                 >
                   {editingQuestion ? 'Update Question' : 'Create Question'}
                 </button>

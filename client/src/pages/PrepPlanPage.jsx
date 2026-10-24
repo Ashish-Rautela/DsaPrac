@@ -100,20 +100,20 @@ At the end, score my correctness, problem-solving, communication and technical d
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header Banner */}
-      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-visa-blue text-xs font-bold">
-            <Sparkles className="w-3.5 h-3.5 text-visa-gold" />
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-bold">
+            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
             <span>Campus Recruitment Intelligence • Summer 2027</span>
           </div>
 
           {hasLifetimeAccess ? (
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+            <span className="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/80">
               <CheckCircle2 className="w-3.5 h-3.5 mr-1.5 text-emerald-600" />
               Full Unlocked Plan Active
             </span>
           ) : (
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-200">
+            <span className="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-900 border border-amber-200/80">
               <Lock className="w-3.5 h-3.5 mr-1.5 text-amber-700" />
               Locked Content (₹20 Lifetime Pass Required)
             </span>
@@ -124,22 +124,22 @@ At the end, score my correctness, problem-solving, communication and technical d
           <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Visa 2027 SWE Intern — OA Research & Preparation Plan
           </h1>
-          <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-500 mt-2 leading-relaxed">
             Consolidated candidate intelligence, timeline distribution, 7-day tactical roadmap, exact AI coaching prompts, and core CS fundamentals for the Visa India campus recruitment drive.
           </p>
         </div>
 
         {/* Quick Intel Pill Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-          <div className="bg-slate-50 p-3 rounded-2xl border border-slate-200">
+          <div className="bg-blue-50/50 p-4 rounded-2xl border border-blue-100/70">
             <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center">
-              <GraduationCap className="w-3.5 h-3.5 mr-1 text-slate-500" /> Eligible
+              <GraduationCap className="w-3.5 h-3.5 mr-1 text-blue-500" /> Eligible
             </div>
             <div className="text-sm font-black text-slate-900 mt-0.5">B.Tech CS 2028</div>
             <div className="text-[11px] text-slate-500">Min 7.0 CGPA • 0 Backlogs</div>
           </div>
 
-          <div className="bg-slate-50 p-3 rounded-2xl border border-slate-200">
+          <div className="bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100/70">
             <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center">
               <DollarSign className="w-3.5 h-3.5 mr-1 text-emerald-600" /> Stipend
             </div>
@@ -147,7 +147,7 @@ At the end, score my correctness, problem-solving, communication and technical d
             <div className="text-[11px] text-slate-500">+ ₹1,00,000 Relocation</div>
           </div>
 
-          <div className="bg-slate-50 p-3 rounded-2xl border border-slate-200">
+          <div className="bg-rose-50/50 p-4 rounded-2xl border border-rose-100/70">
             <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center">
               <Calendar className="w-3.5 h-3.5 mr-1 text-rose-500" /> Registration
             </div>
@@ -155,9 +155,9 @@ At the end, score my correctness, problem-solving, communication and technical d
             <div className="text-[11px] text-slate-500">9:00 AM Sharp</div>
           </div>
 
-          <div className="bg-slate-50 p-3 rounded-2xl border border-slate-200">
+          <div className="bg-amber-50/50 p-4 rounded-2xl border border-amber-100/70">
             <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center">
-              <MapPin className="w-3.5 h-3.5 mr-1 text-visa-blue" /> Location
+              <MapPin className="w-3.5 h-3.5 mr-1 text-amber-500" /> Location
             </div>
             <div className="text-sm font-black text-slate-900 mt-0.5">Bengaluru</div>
             <div className="text-[11px] text-slate-500">May – Mid-July 2027</div>
@@ -168,37 +168,39 @@ At the end, score my correctness, problem-solving, communication and technical d
       {/* If NOT Unlocked: Show Teaser and Paywall Lock */}
       {!hasLifetimeAccess ? (
         <div className="space-y-6">
-          {/* Paywall CTA Card */}
-          <div className="bg-gradient-to-br from-slate-900 via-visa-blue to-slate-950 text-white p-8 sm:p-10 rounded-3xl shadow-xl relative overflow-hidden text-center space-y-6">
-            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-visa-gold/15 blur-3xl pointer-events-none"></div>
-
+          {/* Paywall CTA Card in Soft Bento Style */}
+          <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_12px_40px_rgba(0,0,0,0.04)] p-8 sm:p-12 text-slate-900 text-center space-y-6 relative overflow-hidden">
             <div className="max-w-2xl mx-auto space-y-4">
-              <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center mx-auto border border-white/20 shadow-inner">
-                <Lock className="w-8 h-8 text-visa-gold animate-bounce" />
+              <div className="w-16 h-16 rounded-2xl bg-amber-50 border border-amber-200/80 flex items-center justify-center mx-auto text-amber-600 shadow-sm">
+                <Lock className="w-8 h-8 text-amber-500 animate-bounce" />
               </div>
 
               <div className="space-y-2">
-                <span className="text-xs font-bold uppercase tracking-widest text-amber-300">
-                  Premium Student Intel • ₹20 Lifetime Access
+                <span className="text-xs font-bold uppercase tracking-wider text-amber-900 bg-amber-50 border border-amber-200/80 px-3 py-1 rounded-full inline-block">
+                  Premium Student Intel • <span className="bg-amber-100 text-amber-950 px-2 py-0.5 rounded-lg border border-amber-300 font-black">₹20</span> Lifetime Access
                 </span>
-                <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
+                <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
                   Unlock Complete Visa 2027 OA Plan & AI Prompts
                 </h2>
-                <p className="text-slate-300 text-sm leading-relaxed max-w-lg mx-auto">
+                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed max-w-lg mx-auto">
                   Access the complete 7-day tactical roadmap, emergency 1–3 day timelines, 4 copyable AI DSA mentor prompts, CS fundamentals checklist, and technical interview questions.
                 </p>
               </div>
 
-              {/* Urgency Box */}
-              <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-rose-500/20 border border-rose-400/30 text-rose-200 text-xs sm:text-sm font-bold">
-                <Clock className="w-4 h-4 text-rose-400 animate-pulse" />
-                <span>Price rises to ₹100 in {formatted}! Get lifetime access now for only ₹20.</span>
+              {/* Limited Offer Urgency Box */}
+              <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-2xl bg-red-50 border border-red-200 text-red-600 text-xs sm:text-sm font-bold shadow-xs">
+                <span className="flex h-2 w-2 relative flex-shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
+                </span>
+                <span className="uppercase font-black">Limited Offer:</span>
+                <span>Price rises to ₹100 in {formatted}! Get lifetime access now for only <strong className="font-black text-amber-950 bg-amber-100 px-1.5 py-0.5 rounded border border-amber-300">₹20</strong>.</span>
               </div>
 
               <div className="pt-2">
                 <Link
                   to={isAuthenticated ? '/checkout' : '/register'}
-                  className="inline-flex items-center space-x-2 px-8 py-4 rounded-2xl bg-visa-gold hover:bg-visa-goldHover text-slate-950 font-black text-base transition shadow-lg transform hover:-translate-y-0.5"
+                  className="inline-flex items-center space-x-2 px-8 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-base transition shadow-[0_8px_24px_rgba(16,185,129,0.35)] transform hover:-translate-y-0.5"
                 >
                   <span>Unlock Lifetime Access (₹20)</span>
                   <ArrowRight className="w-5 h-5" />
@@ -208,9 +210,9 @@ At the end, score my correctness, problem-solving, communication and technical d
           </div>
 
           {/* Table of Contents Preview */}
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 space-y-4">
+          <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] p-6 sm:p-8 space-y-4">
             <h3 className="font-extrabold text-lg text-slate-900 flex items-center space-x-2">
-              <BookOpen className="w-5 h-5 text-visa-blue" />
+              <BookOpen className="w-5 h-5 text-blue-600" />
               <span>What's Inside This Unlocked Preparation Plan:</span>
             </h3>
 
@@ -227,7 +229,7 @@ At the end, score my correctness, problem-solving, communication and technical d
                 { title: '9. Project & Resume Interview Questions', desc: 'The 8 critical backend architecture walkthrough questions + payment security topics.' },
                 { title: '10. Curated Practice Resources & Final Strategy', desc: 'Direct problem sets, communities, and execution principles.' },
               ].map((item, idx) => (
-                <div key={idx} className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-start space-x-3">
+                <div key={idx} className="p-3.5 rounded-2xl bg-slate-50/70 border border-slate-100 flex items-start space-x-3">
                   <div className="w-6 h-6 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <Lock className="w-3.5 h-3.5 text-amber-700" />
                   </div>
@@ -254,8 +256,8 @@ At the end, score my correctness, problem-solving, communication and technical d
         /* Unlocked Full Plan */
         <div className="space-y-8">
           {/* Section 1: Recruitment Details */}
-          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-            <div className="flex items-center space-x-2 text-visa-blue">
+          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] space-y-4">
+            <div className="flex items-center space-x-2 text-blue-600">
               <Briefcase className="w-5 h-5" />
               <h2 className="text-xl font-extrabold text-slate-900">1. Recruitment Details</h2>
             </div>
@@ -285,8 +287,8 @@ At the end, score my correctness, problem-solving, communication and technical d
 
             <div className="p-4 rounded-2xl bg-blue-50 border border-blue-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
               <div className="space-y-1">
-                <div className="font-bold text-visa-blue flex items-center space-x-1.5">
-                  <Calendar className="w-4 h-4 text-visa-blue" />
+                <div className="font-bold text-blue-600 flex items-center space-x-1.5">
+                  <Calendar className="w-4 h-4 text-blue-600" />
                   <span>Registration Closes: 9:00 AM, 26 October 2026</span>
                 </div>
                 <p className="text-xs text-slate-600">
@@ -298,7 +300,7 @@ At the end, score my correctness, problem-solving, communication and technical d
                 href="https://docs.google.com/forms/d/e/1FAIpQLScB3jAdQeT2fVtTSHVA2jwqf8QqQYuABX7UqVDByIUL-JVmTg/viewform?usp=publish-editor"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2.5 rounded-xl bg-visa-blue hover:bg-visa-lightBlue text-white font-bold text-xs inline-flex items-center space-x-1.5 transition flex-shrink-0 shadow-sm"
+                className="px-4 py-2.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs inline-flex items-center space-x-1.5 transition flex-shrink-0 shadow-[0_4px_14px_rgba(59,130,246,0.3)]"
               >
                 <span>Open Registration Form</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -307,8 +309,8 @@ At the end, score my correctness, problem-solving, communication and technical d
           </section>
 
           {/* Section 2: Research Question - Timeline */}
-          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-            <div className="flex items-center space-x-2 text-visa-blue">
+          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] space-y-4">
+            <div className="flex items-center space-x-2 text-blue-600">
               <HelpCircle className="w-5 h-5" />
               <h2 className="text-xl font-extrabold text-slate-900">
                 2. Research Question: How Many Days After Notification Does the OA Happen?
@@ -384,8 +386,8 @@ At the end, score my correctness, problem-solving, communication and technical d
           </section>
 
           {/* Section 3: Likely OA Format */}
-          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-            <div className="flex items-center space-x-2 text-visa-blue">
+          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] space-y-4">
+            <div className="flex items-center space-x-2 text-blue-600">
               <Code className="w-5 h-5" />
               <h2 className="text-xl font-extrabold text-slate-900">3. Likely OA Format & Assessment Strategy</h2>
             </div>
@@ -435,8 +437,8 @@ At the end, score my correctness, problem-solving, communication and technical d
           </section>
 
           {/* Section 4: Likely Coding Topics */}
-          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-            <div className="flex items-center space-x-2 text-visa-blue">
+          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] space-y-4">
+            <div className="flex items-center space-x-2 text-blue-600">
               <Layers className="w-5 h-5" />
               <h2 className="text-xl font-extrabold text-slate-900">4. High-Yield Coding Topics (Prioritized Tiers)</h2>
             </div>
@@ -518,8 +520,8 @@ At the end, score my correctness, problem-solving, communication and technical d
           </section>
 
           {/* Section 5: Seven-Day Tactical Plan */}
-          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-            <div className="flex items-center space-x-2 text-visa-blue">
+          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] space-y-4">
+            <div className="flex items-center space-x-2 text-blue-600">
               <Calendar className="w-5 h-5" />
               <h2 className="text-xl font-extrabold text-slate-900">5. Seven-Day Preparation Plan (4 Hours Daily)</h2>
             </div>
@@ -540,7 +542,7 @@ At the end, score my correctness, problem-solving, communication and technical d
               ].map((item, idx) => (
                 <div key={idx} className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div className="space-y-0.5 sm:w-1/3">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-visa-blue bg-blue-100 px-2 py-0.5 rounded">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-blue-600 bg-blue-100 px-2 py-0.5 rounded">
                       {item.day}
                     </span>
                     <h4 className="font-extrabold text-slate-900 text-sm mt-1">{item.focus}</h4>
@@ -568,15 +570,15 @@ At the end, score my correctness, problem-solving, communication and technical d
           </section>
 
           {/* Section 6: Recommended Daily Time Allocation */}
-          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-            <div className="flex items-center space-x-2 text-visa-blue">
+          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] space-y-4">
+            <div className="flex items-center space-x-2 text-blue-600">
               <Clock className="w-5 h-5" />
               <h2 className="text-xl font-extrabold text-slate-900">6. Recommended Daily Time Allocation (4-Hour Session)</h2>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 text-center">
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                <div className="text-2xl font-black text-visa-blue">2 Hours</div>
+                <div className="text-2xl font-black text-blue-600">2 Hours</div>
                 <div className="text-xs font-bold text-slate-800 mt-1">DSA & Timed Coding</div>
                 <p className="text-[11px] text-slate-500 mt-1">Uninterrupted problem solving under clock</p>
               </div>
@@ -602,8 +604,8 @@ At the end, score my correctness, problem-solving, communication and technical d
           </section>
 
           {/* Section 7: How to Use AI Effectively + Copyable Prompts */}
-          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
-            <div className="flex items-center space-x-2 text-visa-blue">
+          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] space-y-6">
+            <div className="flex items-center space-x-2 text-blue-600">
               <Bot className="w-5 h-5" />
               <h2 className="text-xl font-extrabold text-slate-900">
                 7. How to Use AI Effectively + 4 Copyable Master Prompts
@@ -622,7 +624,7 @@ At the end, score my correctness, problem-solving, communication and technical d
                 >
                   <div className="bg-slate-100 px-4 py-3 flex items-center justify-between border-b border-slate-200 flex-wrap gap-2">
                     <div className="flex items-center space-x-2">
-                      <Terminal className="w-4 h-4 text-visa-blue" />
+                      <Terminal className="w-4 h-4 text-blue-600" />
                       <span className="font-bold text-xs sm:text-sm text-slate-900">{prompt.title}</span>
                       <span className="text-[10px] uppercase font-bold bg-white text-slate-600 px-2 py-0.5 rounded border border-slate-200">
                         {prompt.category}
@@ -670,8 +672,8 @@ At the end, score my correctness, problem-solving, communication and technical d
           </section>
 
           {/* Section 8: Core CS Fundamentals */}
-          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-            <div className="flex items-center space-x-2 text-visa-blue">
+          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] space-y-4">
+            <div className="flex items-center space-x-2 text-blue-600">
               <Cpu className="w-5 h-5" />
               <h2 className="text-xl font-extrabold text-slate-900">
                 8. Core CS Fundamentals for the Technical Interview
@@ -685,7 +687,7 @@ At the end, score my correctness, problem-solving, communication and technical d
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
                 <h4 className="font-extrabold text-slate-900 flex items-center space-x-2">
-                  <Code className="w-4 h-4 text-visa-blue" />
+                  <Code className="w-4 h-4 text-blue-600" />
                   <span>OOP & Software Design</span>
                 </h4>
                 <ul className="text-slate-600 space-y-1 list-disc list-inside text-xs">
@@ -764,8 +766,8 @@ At the end, score my correctness, problem-solving, communication and technical d
           </section>
 
           {/* Section 9: Project & Behavioral Interview Prep */}
-          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-            <div className="flex items-center space-x-2 text-visa-blue">
+          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] space-y-4">
+            <div className="flex items-center space-x-2 text-blue-600">
               <CheckCircle2 className="w-5 h-5" />
               <h2 className="text-xl font-extrabold text-slate-900">
                 9. Project Walkthrough & Visa Specific Questions
@@ -789,7 +791,7 @@ At the end, score my correctness, problem-solving, communication and technical d
             </div>
 
             <div className="p-4 rounded-2xl bg-blue-50 border border-blue-200 space-y-2 text-xs sm:text-sm">
-              <strong className="text-visa-blue font-bold block">
+              <strong className="text-blue-600 font-bold block">
                 Visa Behavioral & Payments Questions:
               </strong>
               <ul className="text-slate-600 space-y-1 list-disc list-inside text-xs">
@@ -802,8 +804,8 @@ At the end, score my correctness, problem-solving, communication and technical d
           </section>
 
           {/* Section 10 & 11: Resources & Final Strategy */}
-          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-            <div className="flex items-center space-x-2 text-visa-blue">
+          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] space-y-4">
+            <div className="flex items-center space-x-2 text-blue-600">
               <Zap className="w-5 h-5" />
               <h2 className="text-xl font-extrabold text-slate-900">10. Final Strategy Checklist</h2>
             </div>
@@ -835,7 +837,7 @@ At the end, score my correctness, problem-solving, communication and technical d
               <span>Document Status: Verified campus research plan for Graphic Era Visa SWE Intern drive.</span>
               <Link
                 to="/questions"
-                className="px-4 py-2 rounded-xl bg-visa-blue text-white font-bold text-xs hover:bg-visa-lightBlue transition inline-flex items-center space-x-1"
+                className="px-4 py-2 rounded-2xl bg-blue-600 text-white font-bold text-xs hover:bg-blue-700 transition shadow-[0_4px_14px_rgba(59,130,246,0.3)] inline-flex items-center space-x-1"
               >
                 <span>Practice Visa Question Bank</span>
                 <ChevronRight className="w-3.5 h-3.5" />

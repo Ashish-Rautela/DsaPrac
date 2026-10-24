@@ -59,7 +59,7 @@ export default function PaymentStatusPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)]">
         <div>
           <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Payment History</h1>
           <p className="text-xs text-slate-500">Track the status of your payment submissions.</p>
@@ -68,7 +68,7 @@ export default function PaymentStatusPage() {
         <button
           onClick={handleRefresh}
           disabled={refreshing}
-          className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-semibold text-slate-700 transition"
+          className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-2xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-semibold text-slate-700 transition"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
           <span>{refreshing ? 'Refreshing...' : 'Refresh Status'}</span>
@@ -77,7 +77,7 @@ export default function PaymentStatusPage() {
 
       {loading ? (
         <div className="py-20 text-center space-y-3">
-          <div className="w-8 h-8 border-4 border-visa-blue border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
           <p className="text-sm text-slate-500">Checking payment verification records...</p>
         </div>
       ) : error ? (
@@ -86,8 +86,10 @@ export default function PaymentStatusPage() {
           <p className="text-sm text-slate-700">{error}</p>
         </div>
       ) : payments.length === 0 ? (
-        <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-12 text-center space-y-4 max-w-lg mx-auto">
-          <CreditCard className="w-12 h-12 text-slate-400 mx-auto" />
+        <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] p-12 text-center space-y-4 max-w-lg mx-auto">
+          <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-500 border border-blue-100/60 flex items-center justify-center mx-auto">
+            <CreditCard className="w-6 h-6" />
+          </div>
           <div className="space-y-1">
             <h2 className="text-lg font-bold text-slate-900">No Payment Submissions Found</h2>
             <p className="text-xs text-slate-500">
@@ -96,7 +98,7 @@ export default function PaymentStatusPage() {
           </div>
           <Link
             to="/checkout"
-            className="inline-flex items-center space-x-2 px-6 py-2.5 rounded-xl bg-visa-blue text-white font-bold text-xs hover:bg-visa-lightBlue transition shadow-sm"
+            className="inline-flex items-center space-x-2 px-6 py-2.5 rounded-2xl bg-blue-600 text-white font-bold text-xs hover:bg-blue-700 transition shadow-[0_4px_14px_rgba(59,130,246,0.3)]"
           >
             <span>Proceed to Checkout</span>
             <ArrowRight className="w-4 h-4" />
@@ -112,23 +114,23 @@ export default function PaymentStatusPage() {
             return (
               <div
                 key={p.paymentId}
-                className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4 transition hover:border-slate-300"
+                className="bg-white rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] p-6 space-y-4 transition hover:shadow-[0_12px_36px_rgb(0,0,0,0.05)]"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
                   <div className="flex items-center space-x-3">
                     {isApproved && (
-                      <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0">
-                        <CheckCircle2 className="w-6 h-6" />
+                      <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center flex-shrink-0">
+                        <CheckCircle2 className="w-5 h-5" />
                       </div>
                     )}
                     {isPending && (
-                      <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0">
-                        <Clock className="w-6 h-6 animate-pulse" />
+                      <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center flex-shrink-0">
+                        <Clock className="w-5 h-5 animate-pulse" />
                       </div>
                     )}
                     {isRejected && (
-                      <div className="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center flex-shrink-0">
-                        <XCircle className="w-6 h-6" />
+                      <div className="w-10 h-10 rounded-2xl bg-rose-50 text-rose-600 border border-rose-100 flex items-center justify-center flex-shrink-0">
+                        <XCircle className="w-5 h-5" />
                       </div>
                     )}
 
@@ -138,23 +140,23 @@ export default function PaymentStatusPage() {
                         <span
                           className={`px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider ${
                             isApproved
-                              ? 'bg-emerald-100 text-emerald-800'
+                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/70'
                               : isPending
-                              ? 'bg-amber-100 text-amber-800'
-                              : 'bg-rose-100 text-rose-800'
+                              ? 'bg-amber-50 text-amber-800 border border-amber-200/70'
+                              : 'bg-rose-50 text-rose-700 border border-rose-200/70'
                           }`}
                         >
                           {p.status}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-500 font-mono">UTR: {p.utr}</p>
+                      <p className="text-xs text-slate-400 font-mono">UTR: {p.utr}</p>
                     </div>
                   </div>
 
                   {isApproved && (
                     <Link
                       to="/questions"
-                      className="px-4 py-2 rounded-xl bg-visa-blue text-white font-bold text-xs hover:bg-visa-lightBlue transition inline-flex items-center space-x-1.5 self-start sm:self-center shadow-sm"
+                      className="px-4 py-2 rounded-2xl bg-blue-600 text-white font-bold text-xs hover:bg-blue-700 transition inline-flex items-center space-x-1.5 self-start sm:self-center shadow-[0_4px_14px_rgba(59,130,246,0.3)]"
                     >
                       <span>Access Questions</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -164,7 +166,7 @@ export default function PaymentStatusPage() {
                   {isRejected && (
                     <Link
                       to="/checkout"
-                      className="px-4 py-2 rounded-xl bg-slate-900 text-white font-bold text-xs hover:bg-slate-800 transition inline-flex items-center space-x-1.5 self-start sm:self-center shadow-sm"
+                      className="px-4 py-2 rounded-2xl bg-slate-900 text-white font-bold text-xs hover:bg-slate-800 transition inline-flex items-center space-x-1.5 self-start sm:self-center shadow-xs"
                     >
                       <span>Submit New UTR</span>
                       <ArrowRight className="w-3.5 h-3.5" />

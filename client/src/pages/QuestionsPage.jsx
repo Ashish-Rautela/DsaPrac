@@ -225,7 +225,7 @@ export default function QuestionsPage() {
             <div className="grid grid-cols-2 gap-2.5 pt-1 text-xs">
               <Link
                 to="/prep-plan"
-                className="flex items-center space-x-2 text-slate-700 hover:text-visa-blue transition font-semibold"
+                className="flex items-center space-x-2 text-slate-700 hover:text-blue-600 transition font-semibold"
               >
                 <span className="w-4 h-4 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-[10px] font-bold">✓</span>
                 <span>Check Prep Plan</span>
@@ -233,7 +233,7 @@ export default function QuestionsPage() {
 
               <Link
                 to="/questions?difficulty=Easy"
-                className="flex items-center space-x-2 text-slate-700 hover:text-visa-blue transition font-semibold"
+                className="flex items-center space-x-2 text-slate-700 hover:text-blue-600 transition font-semibold"
               >
                 <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-[10px] font-bold">✓</span>
                 <span>Easy Starters</span>
@@ -241,7 +241,7 @@ export default function QuestionsPage() {
 
               <Link
                 to="/prep-plan#prompts"
-                className="flex items-center space-x-2 text-slate-700 hover:text-visa-blue transition font-semibold"
+                className="flex items-center space-x-2 text-slate-700 hover:text-blue-600 transition font-semibold"
               >
                 <span className="w-4 h-4 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-[10px] font-bold">✓</span>
                 <span>4 AI Prompts</span>
@@ -250,10 +250,10 @@ export default function QuestionsPage() {
               {!hasLifetimeAccess ? (
                 <Link
                   to="/checkout"
-                  className="flex items-center space-x-2 text-slate-700 hover:text-visa-blue transition font-semibold"
+                  className="flex items-center space-x-2 text-emerald-700 hover:text-emerald-800 transition font-bold"
                 >
-                  <span className="w-4 h-4 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-[10px] font-bold">✓</span>
-                  <span>Unlock for ₹20</span>
+                  <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-[10px] font-bold">✓</span>
+                  <span>Unlock Lifetime (<strong className="underline decoration-emerald-400">₹20</strong>)</span>
                 </Link>
               ) : (
                 <span className="flex items-center space-x-2 text-emerald-700 font-semibold">
@@ -277,7 +277,7 @@ export default function QuestionsPage() {
               <Bell className="w-4 h-4 text-slate-400" />
               <h2 className="text-sm font-extrabold text-slate-900 tracking-tight">Key Recruitment Alerts</h2>
             </div>
-            <span className="text-[11px] font-bold text-visa-blue">Live</span>
+            <span className="text-[11px] font-bold text-blue-600">Live</span>
           </div>
 
           <div className="space-y-2.5 text-xs">
@@ -285,18 +285,19 @@ export default function QuestionsPage() {
             {!hasLifetimeAccess && (
               <Link
                 to="/checkout"
-                className="block p-3 rounded-2xl bg-amber-50/80 hover:bg-amber-100/70 border border-amber-200/70 transition space-y-0.5 group"
+                className="block p-3 rounded-2xl bg-red-50/80 hover:bg-red-100/70 border border-red-200/80 transition space-y-0.5 group shadow-xs"
               >
-                <div className="flex items-center justify-between text-amber-900 font-bold">
+                <div className="flex items-center justify-between text-red-700 font-bold">
                   <span className="flex items-center space-x-1.5">
-                    <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
-                    <span>₹20 Launch Access</span>
+                    <span className="w-2 h-2 rounded-full bg-red-600 animate-ping"></span>
+                    <span className="uppercase text-[11px] font-black">Limited Offer:</span>
+                    <span className="bg-amber-100 text-amber-950 px-1.5 py-0.5 rounded border border-amber-300 font-black">₹20</span>
                   </span>
-                  <span className="font-mono text-[11px] bg-white px-2 py-0.5 rounded-full border border-amber-200">
+                  <span className="font-mono text-[11px] bg-white px-2 py-0.5 rounded-full border border-red-200 text-red-700 font-bold">
                     {formatted} left
                   </span>
                 </div>
-                <p className="text-[11px] text-amber-800">Price jumps to ₹100 when timer ends. Tap to unlock.</p>
+                <p className="text-[11px] text-red-600">Price jumps to ₹100 when timer ends. Tap to unlock lifetime.</p>
               </Link>
             )}
 
@@ -451,7 +452,7 @@ export default function QuestionsPage() {
 
         {loading ? (
           <div className="py-20 text-center space-y-3">
-            <div className="w-8 h-8 border-3 border-visa-blue border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <div className="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
             <p className="text-xs text-slate-400">Loading Visa questions...</p>
           </div>
         ) : error ? (
@@ -515,7 +516,7 @@ export default function QuestionsPage() {
                         ) : (
                           <Link
                             to={`/questions/${q.questionId}`}
-                            className="text-sm font-bold text-slate-900 hover:text-visa-blue transition truncate block min-w-0"
+                            className="text-sm font-bold text-slate-900 hover:text-blue-600 transition truncate block min-w-0"
                           >
                             {q.title}
                           </Link>
@@ -566,7 +567,7 @@ export default function QuestionsPage() {
                     {isLocked ? (
                       <Link
                         to="/checkout"
-                        className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-600 active:scale-95 text-slate-950 transition flex items-center space-x-1.5 shadow-sm whitespace-nowrap"
+                        className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white transition flex items-center space-x-1.5 shadow-[0_2px_8px_rgba(16,185,129,0.3)] whitespace-nowrap"
                       >
                         <Lock className="w-3.5 h-3.5 flex-shrink-0" />
                         <span>Unlock ₹20</span>
@@ -589,8 +590,8 @@ export default function QuestionsPage() {
 
         {/* Clean, Modular Unlock Footer Banner */}
         {!hasLifetimeAccess && totalPremiumHidden > 0 && (
-          <div className="p-6 sm:p-8 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border-t border-amber-200/80 text-center space-y-3">
-            <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mx-auto">
+          <div className="p-6 sm:p-8 bg-gradient-to-r from-emerald-500/10 via-emerald-500/5 to-transparent border-t border-emerald-200/80 text-center space-y-3">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200/80 flex items-center justify-center mx-auto">
               <Lock className="w-5 h-5" />
             </div>
             <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
@@ -598,10 +599,10 @@ export default function QuestionsPage() {
             </p>
             <Link
               to="/checkout"
-              className="inline-flex items-center space-x-2 px-6 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition shadow-md"
+              className="inline-flex items-center space-x-2 px-6 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs transition shadow-[0_4px_14px_rgba(16,185,129,0.35)]"
             >
-              <span>Unlock Full Bank for ₹20</span>
-              <Sparkles className="w-3.5 h-3.5 text-visa-gold" />
+              <span>Unlock Lifetime Access for ₹20</span>
+              <Sparkles className="w-3.5 h-3.5 text-emerald-200" />
             </Link>
           </div>
         )}

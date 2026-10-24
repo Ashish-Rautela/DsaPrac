@@ -35,25 +35,29 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-[75vh] flex items-center justify-center px-4 py-12">
-      <div className="max-w-md w-full bg-white rounded-3xl border border-slate-200 shadow-sm p-8 space-y-6">
+      <div className="max-w-md w-full bg-white rounded-3xl border border-slate-100 shadow-[0_12px_40px_rgba(0,0,0,0.04)] p-8 sm:p-10 space-y-6">
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-visa-blue text-white flex items-center justify-center mx-auto text-2xl font-black italic shadow-sm">
-            <span className="text-visa-gold">V</span>
+          <div className="w-12 h-12 rounded-2xl bg-white border border-slate-100 shadow-[0_4px_12px_rgba(0,0,0,0.04)] flex items-center justify-center mx-auto">
+            <svg viewBox="0 0 32 32" className="w-6 h-6" fill="none">
+              <path d="M8 18C8 12.5 11.5 8 16 8" stroke="#3B82F6" strokeWidth="3.5" strokeLinecap="round" />
+              <path d="M16 8C20.5 8 24 12.5 24 18" stroke="#F59E0B" strokeWidth="3.5" strokeLinecap="round" />
+              <path d="M11 23C13.5 25 18.5 25 21 23" stroke="#F43F5E" strokeWidth="3.5" strokeLinecap="round" />
+            </svg>
           </div>
           <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Create Free Account</h2>
           <p className="text-xs text-slate-500">Sign up to practice free starter problems and track your progress.</p>
         </div>
 
         {error && (
-          <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 flex items-start space-x-2.5 text-rose-800 text-sm">
-            <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5 text-rose-600" />
+          <div className="p-4 rounded-2xl bg-rose-50 border border-rose-100 flex items-start space-x-2.5 text-rose-700 text-sm">
+            <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5 text-rose-500" />
             <span>{error}</span>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
               Full Name
             </label>
             <div className="relative">
@@ -66,13 +70,13 @@ export default function RegisterPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Alex Johnson"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-visa-blue/20 focus:border-visa-blue transition"
+                className="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-slate-200 bg-slate-50/50 text-base sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white transition"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
               Email Address
             </label>
             <div className="relative">
@@ -85,13 +89,13 @@ export default function RegisterPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="alex@student.edu"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-visa-blue/20 focus:border-visa-blue transition"
+                className="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-slate-200 bg-slate-50/50 text-base sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white transition"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
               Password
             </label>
             <div className="relative">
@@ -105,7 +109,7 @@ export default function RegisterPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="At least 8 characters"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-visa-blue/20 focus:border-visa-blue transition"
+                className="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-slate-200 bg-slate-50/50 text-base sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white transition"
               />
             </div>
             <p className="text-[11px] text-slate-400 mt-1">Minimum 8 characters with strong entropy.</p>
@@ -114,7 +118,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 rounded-xl bg-visa-blue text-white font-bold text-sm hover:bg-visa-lightBlue transition shadow-md disabled:opacity-50 flex items-center justify-center space-x-2 min-h-[44px]"
+            className="w-full py-3 px-4 rounded-2xl bg-blue-600 text-white font-bold text-sm hover:bg-blue-700 transition shadow-[0_4px_14px_rgba(59,130,246,0.3)] disabled:opacity-50 flex items-center justify-center space-x-2 min-h-[44px]"
           >
             {loading ? (
               <span>Creating account...</span>
@@ -127,9 +131,9 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        <div className="text-center pt-2 border-t border-slate-100 text-xs text-slate-600">
+        <div className="text-center pt-2 border-t border-slate-100 text-xs text-slate-500">
           Already have an account?{' '}
-          <Link to="/login" className="font-bold text-visa-blue hover:underline">
+          <Link to="/login" className="font-bold text-blue-600 hover:underline">
             Sign in
           </Link>
         </div>
