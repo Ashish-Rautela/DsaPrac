@@ -154,17 +154,19 @@ export default function LandingPage() {
           ) : (
             <div className="divide-y divide-slate-100">
               {previewQuestions.map((q) => (
-                <div key={q.questionId} className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
-                  <div className="space-y-1 min-w-0">
-                    <div className="flex items-center space-x-2 flex-wrap gap-y-1">
-                      <span className="font-semibold text-slate-900 text-sm sm:text-base">{q.title}</span>
+                <div key={q.questionId} className="py-3.5 sm:py-4 flex items-center justify-between gap-3">
+                  <div className="space-y-1 min-w-0 flex-1">
+                    <div className="flex items-center space-x-2 min-w-0">
+                      <span className="font-semibold text-slate-900 text-sm sm:text-base truncate block min-w-0">
+                        {q.title}
+                      </span>
                       {q.isPremium ? (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-100 text-amber-800">
-                          <Lock className="w-3 h-3 mr-1" /> Premium
+                        <span className="flex-shrink-0 inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-amber-900 bg-amber-100 border border-amber-200 px-1.5 py-0.5 rounded">
+                          <Lock className="w-2.5 h-2.5 mr-0.5 text-amber-700" /> PRO
                         </span>
                       ) : (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100 text-emerald-800">
-                          Free Starter
+                        <span className="flex-shrink-0 text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-1.5 py-0.5 rounded">
+                          Free
                         </span>
                       )}
                     </div>
@@ -172,22 +174,24 @@ export default function LandingPage() {
                       <span
                         className={`font-semibold ${
                           q.difficulty === 'Easy'
-                            ? 'text-emerald-600'
+                            ? 'text-[#00af9b]'
                             : q.difficulty === 'Medium'
-                            ? 'text-amber-600'
-                            : 'text-rose-600'
+                            ? 'text-[#ffb800]'
+                            : 'text-[#ff2d55]'
                         }`}
                       >
                         {q.difficulty}
                       </span>
                       <span>•</span>
-                      <span className="truncate">{q.topics.join(', ')}</span>
+                      <span className="truncate max-w-[180px] sm:max-w-none text-[11px] text-slate-500">
+                        {q.topics.slice(0, 3).join(', ')}
+                      </span>
                     </div>
                   </div>
 
                   <Link
                     to={q.isPremium && !hasLifetimeAccess ? '/checkout' : `/questions/${q.questionId}`}
-                    className="self-start sm:self-center flex-shrink-0 px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 hover:bg-slate-50 transition text-slate-700 min-h-[36px] inline-flex items-center justify-center shadow-xs"
+                    className="flex-shrink-0 px-3.5 py-1.5 rounded-lg text-xs font-bold border border-slate-200 hover:bg-slate-100 active:scale-95 transition text-slate-800 min-h-[34px] inline-flex items-center justify-center shadow-xs whitespace-nowrap"
                   >
                     {q.isPremium && !hasLifetimeAccess ? 'Unlock ₹20' : 'Practice'}
                   </Link>
