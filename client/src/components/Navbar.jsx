@@ -182,7 +182,8 @@ export default function Navbar() {
           <div className="flex md:hidden items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              aria-label="Toggle navigation menu"
+              className="p-2.5 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 min-h-[44px] min-w-[44px] flex items-center justify-center transition"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -190,98 +191,106 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer & Backdrop */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-5 space-y-2">
-          <Link
-            to="/questions"
+        <>
+          <div
+            className="fixed inset-0 top-[105px] sm:top-[97px] bg-slate-950/40 backdrop-blur-xs z-30 md:hidden animate-in fade-in duration-150"
             onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100"
-          >
-            Question Bank
-          </Link>
-          <Link
-            to="/prep-plan"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center justify-between px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100"
-          >
-            <div className="flex items-center space-x-2">
-              <BookOpen className="w-4 h-4 text-visa-blue" />
-              <span>Prep Plan</span>
-            </div>
-            {!hasLifetimeAccess ? (
-              <span className="text-[10px] px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold flex items-center">
-                <Lock className="w-2.5 h-2.5 mr-1" /> PRO
-              </span>
-            ) : (
-              <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold flex items-center">
-                <CheckCircle className="w-2.5 h-2.5 mr-1" /> UNLOCKED
-              </span>
-            )}
-          </Link>
-          {isAuthenticated && (
-            <>
-              <Link
-                to="/payment-status"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100"
-              >
-                My Payments
-              </Link>
-              {!hasLifetimeAccess && (
-                <Link
-                  to="/checkout"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-lg text-base font-semibold text-amber-700 bg-amber-50"
-                >
-                  Unlock Lifetime Access (₹20)
-                </Link>
-              )}
-              {isAdmin && (
-                <Link
-                  to="/admin"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-lg text-base font-semibold text-indigo-700 bg-indigo-50"
-                >
-                  Admin Console
-                </Link>
-              )}
-              <div className="pt-3 border-t border-slate-200">
-                <div className="px-3 py-1 mb-2">
-                  <p className="text-sm font-semibold text-slate-800">{user.name}</p>
-                  <p className="text-xs text-slate-500">{user.email}</p>
-                </div>
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    handleLogout();
-                  }}
-                  className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-rose-600 hover:bg-rose-50"
-                >
-                  Sign Out
-                </button>
+          />
+          <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-1.5 shadow-xl relative z-40 animate-in slide-in-from-top-2 duration-150 max-h-[calc(100vh-100px)] overflow-y-auto">
+            <Link
+              to="/questions"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center min-h-[44px] px-3.5 py-2.5 rounded-xl text-base font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition"
+            >
+              Question Bank
+            </Link>
+            <Link
+              to="/prep-plan"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between min-h-[44px] px-3.5 py-2.5 rounded-xl text-base font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition"
+            >
+              <div className="flex items-center space-x-2">
+                <BookOpen className="w-4 h-4 text-visa-blue" />
+                <span>Prep Plan</span>
               </div>
-            </>
-          )}
-          {!isAuthenticated && (
-            <div className="pt-2 flex flex-col space-y-2">
-              <Link
-                to="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center px-4 py-2.5 rounded-lg text-sm font-semibold text-slate-700 bg-slate-100"
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/register"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center px-4 py-2.5 rounded-lg text-sm font-semibold bg-visa-blue text-white"
-              >
-                Get Started
-              </Link>
-            </div>
-          )}
-        </div>
+              {!hasLifetimeAccess ? (
+                <span className="text-[10px] px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold flex items-center">
+                  <Lock className="w-2.5 h-2.5 mr-1" /> PRO
+                </span>
+              ) : (
+                <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold flex items-center">
+                  <CheckCircle className="w-2.5 h-2.5 mr-1" /> UNLOCKED
+                </span>
+              )}
+            </Link>
+            {isAuthenticated && (
+              <>
+                <Link
+                  to="/payment-status"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center min-h-[44px] px-3.5 py-2.5 rounded-xl text-base font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition"
+                >
+                  My Payments
+                </Link>
+                {!hasLifetimeAccess && (
+                  <Link
+                    to="/checkout"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between min-h-[44px] px-3.5 py-2.5 rounded-xl text-base font-bold text-amber-900 bg-amber-50 hover:bg-amber-100 transition"
+                  >
+                    <span>Unlock Lifetime Access</span>
+                    <span className="text-xs bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md font-extrabold">₹20</span>
+                  </Link>
+                )}
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center min-h-[44px] px-3.5 py-2.5 rounded-xl text-base font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 transition"
+                  >
+                    Admin Console
+                  </Link>
+                )}
+                <div className="pt-3 mt-2 border-t border-slate-200">
+                  <div className="px-3.5 py-1.5 mb-2">
+                    <p className="text-sm font-bold text-slate-900">{user.name}</p>
+                    <p className="text-xs text-slate-500 truncate">{user.email}</p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      handleLogout();
+                    }}
+                    className="w-full text-left flex items-center min-h-[44px] px-3.5 py-2 rounded-xl text-sm font-bold text-rose-600 hover:bg-rose-50 transition"
+                  >
+                    <LogOut className="w-4 h-4 mr-2" />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              </>
+            )}
+            {!isAuthenticated && (
+              <div className="pt-3 flex flex-col space-y-2">
+                <Link
+                  to="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full text-center flex items-center justify-center min-h-[44px] px-4 py-2.5 rounded-xl text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/register"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full text-center flex items-center justify-center min-h-[44px] px-4 py-2.5 rounded-xl text-sm font-bold bg-visa-blue hover:bg-visa-lightBlue text-white transition shadow-sm"
+                >
+                  Get Started
+                </Link>
+              </div>
+            )}
+          </div>
+        </>
       )}
     </header>
   );

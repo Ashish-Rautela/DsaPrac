@@ -62,7 +62,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@student.edu"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-visa-blue/20 focus:border-visa-blue transition"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-visa-blue/20 focus:border-visa-blue transition"
               />
             </div>
           </div>
@@ -81,7 +81,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-visa-blue/20 focus:border-visa-blue transition"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-visa-blue/20 focus:border-visa-blue transition"
               />
             </div>
           </div>
@@ -89,7 +89,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 rounded-xl bg-visa-blue text-white font-bold text-sm hover:bg-visa-lightBlue transition shadow-md disabled:opacity-50 flex items-center justify-center space-x-2"
+            className="w-full py-3 px-4 rounded-xl bg-visa-blue text-white font-bold text-sm hover:bg-visa-lightBlue transition shadow-md disabled:opacity-50 flex items-center justify-center space-x-2 min-h-[44px]"
           >
             {loading ? (
               <span>Signing in...</span>

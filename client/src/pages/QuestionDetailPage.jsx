@@ -190,7 +190,7 @@ export default function QuestionDetailPage() {
           {isAuthenticated && (
             <button
               onClick={handleToggleSolved}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 border flex-shrink-0 ${
+              className={`px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center space-x-2 border flex-shrink-0 min-h-[40px] self-start sm:self-center ${
                 isSolved
                   ? 'bg-emerald-50 border-emerald-300 text-emerald-800'
                   : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
@@ -227,7 +227,7 @@ export default function QuestionDetailPage() {
         {/* LeetCode Direct Link Box */}
         {question.leetcodeUrl && (
           <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="space-y-0.5">
+            <div className="space-y-0.5 min-w-0">
               <p className="text-xs font-bold text-slate-800 uppercase tracking-wide">
                 Direct LeetCode Problem Link
               </p>
@@ -239,7 +239,7 @@ export default function QuestionDetailPage() {
               href={question.leetcodeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition shadow-sm self-start sm:self-center flex-shrink-0"
+              className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition shadow-sm self-start sm:self-center flex-shrink-0 min-h-[40px]"
             >
               <span>Solve on LeetCode</span>
               <ExternalLink className="w-3.5 h-3.5" />
@@ -254,7 +254,7 @@ export default function QuestionDetailPage() {
             <span>Algorithmic Pattern & Visa OA Intuition</span>
           </div>
 
-          <div className="p-5 rounded-2xl bg-blue-50/50 border border-blue-100 text-slate-800 text-sm leading-relaxed whitespace-pre-line font-mono sm:font-sans">
+          <div className="p-4 sm:p-5 rounded-2xl bg-blue-50/50 border border-blue-100 text-slate-800 text-xs sm:text-sm leading-relaxed whitespace-pre-line font-mono sm:font-sans overflow-x-auto break-words">
             {question.description || 'No additional notes provided for this question.'}
           </div>
         </div>

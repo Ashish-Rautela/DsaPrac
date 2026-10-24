@@ -414,7 +414,7 @@ export default function CheckoutPage() {
                   onChange={(e) => setUtr(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''))}
                   placeholder="e.g. 428719827364"
                   maxLength={24}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 font-mono text-sm uppercase tracking-wider text-slate-900 focus:outline-none focus:ring-2 focus:ring-visa-blue/20 focus:border-visa-blue transition"
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 font-mono text-base sm:text-sm uppercase tracking-wider text-slate-900 focus:outline-none focus:ring-2 focus:ring-visa-blue/20 focus:border-visa-blue transition"
                 />
                 <p className="text-[11px] text-slate-400 mt-1">
                   12-digit number found on your UPI receipt.
@@ -434,7 +434,7 @@ export default function CheckoutPage() {
               <button
                 type="submit"
                 disabled={loading || isCompressing || (!screenshot && utr.trim().length < 8)}
-                className="w-full py-3.5 px-4 rounded-xl bg-visa-blue hover:bg-visa-lightBlue text-white font-bold text-sm transition shadow-md disabled:opacity-40 flex items-center justify-center space-x-2"
+                className="w-full py-3.5 px-4 rounded-xl bg-visa-blue hover:bg-visa-lightBlue text-white font-bold text-sm transition shadow-md disabled:opacity-40 flex items-center justify-center space-x-2 min-h-[48px]"
               >
                 {loading ? (
                   <span>Submitting Payment Proof...</span>

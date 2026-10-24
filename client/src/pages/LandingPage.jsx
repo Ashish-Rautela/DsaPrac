@@ -43,18 +43,18 @@ export default function LandingPage() {
               <span>160+ High-Frequency Visa SWE Intern & New Grad Questions</span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
               Master the Exact Questions of the <span className="text-visa-blue underline decoration-visa-gold decoration-4">Visa OA</span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-slate-600 leading-relaxed font-normal">
+            <p className="text-base sm:text-xl text-slate-600 leading-relaxed font-normal">
               160+ actual assessment problems with LeetCode mappings, interview appearance frequencies, algorithmic intuition, and pattern breakdowns — all for ₹20 lifetime access.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
               <Link
                 to="/questions"
-                className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-visa-blue text-white font-bold text-base hover:bg-visa-lightBlue transition shadow-lg shadow-blue-900/10 flex items-center justify-center space-x-2"
+                className="w-full sm:w-auto px-6 sm:px-7 py-3.5 rounded-xl bg-visa-blue text-white font-bold text-sm sm:text-base hover:bg-visa-lightBlue transition shadow-lg shadow-blue-900/10 flex items-center justify-center space-x-2 min-h-[48px]"
               >
                 <span>Browse Question Bank</span>
                 <ArrowRight className="w-5 h-5" />
@@ -62,7 +62,7 @@ export default function LandingPage() {
 
               <Link
                 to="/prep-plan"
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white border-2 border-slate-200 hover:border-visa-blue hover:bg-blue-50/50 text-slate-800 hover:text-visa-blue font-bold text-base transition shadow-sm flex items-center justify-center space-x-2"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white border-2 border-slate-200 hover:border-visa-blue hover:bg-blue-50/50 text-slate-800 hover:text-visa-blue font-bold text-sm sm:text-base transition shadow-sm flex items-center justify-center space-x-2 min-h-[48px]"
               >
                 <BookOpen className="w-5 h-5 text-visa-blue" />
                 <span>Check Prep Plan</span>
@@ -71,15 +71,15 @@ export default function LandingPage() {
               {!hasLifetimeAccess && (
                 <Link
                   to={isAuthenticated ? '/checkout' : '/register'}
-                  className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-base transition shadow-sm flex items-center justify-center space-x-2"
+                  className="w-full sm:w-auto px-6 sm:px-7 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm sm:text-base transition shadow-sm flex items-center justify-center space-x-2 min-h-[48px]"
                 >
                   <Zap className="w-5 h-5 text-slate-950" />
-                  <span>Unlock Lifetime Access — ₹20</span>
+                  <span>Unlock Lifetime — ₹20</span>
                 </Link>
               )}
             </div>
 
-            <div className="flex items-center justify-center space-x-6 pt-4 text-xs font-medium text-slate-500">
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-3 text-xs font-medium text-slate-500">
               <span className="flex items-center">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 mr-1.5" />
                 One-time ₹20 payment
@@ -154,10 +154,10 @@ export default function LandingPage() {
           ) : (
             <div className="divide-y divide-slate-100">
               {previewQuestions.map((q) => (
-                <div key={q.questionId} className="py-4 flex items-center justify-between gap-4">
-                  <div className="space-y-1">
-                    <div className="flex items-center space-x-2">
-                      <span className="font-semibold text-slate-900 text-base">{q.title}</span>
+                <div key={q.questionId} className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+                  <div className="space-y-1 min-w-0">
+                    <div className="flex items-center space-x-2 flex-wrap gap-y-1">
+                      <span className="font-semibold text-slate-900 text-sm sm:text-base">{q.title}</span>
                       {q.isPremium ? (
                         <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-100 text-amber-800">
                           <Lock className="w-3 h-3 mr-1" /> Premium
@@ -168,7 +168,7 @@ export default function LandingPage() {
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center space-x-2 text-xs text-slate-500">
+                    <div className="flex items-center space-x-2 text-xs text-slate-500 flex-wrap">
                       <span
                         className={`font-semibold ${
                           q.difficulty === 'Easy'
@@ -181,13 +181,13 @@ export default function LandingPage() {
                         {q.difficulty}
                       </span>
                       <span>•</span>
-                      <span>{q.topics.join(', ')}</span>
+                      <span className="truncate">{q.topics.join(', ')}</span>
                     </div>
                   </div>
 
                   <Link
                     to={q.isPremium && !hasLifetimeAccess ? '/checkout' : `/questions/${q.questionId}`}
-                    className="flex-shrink-0 px-4 py-2 rounded-lg text-xs font-semibold border border-slate-200 hover:bg-slate-50 transition text-slate-700"
+                    className="self-start sm:self-center flex-shrink-0 px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 hover:bg-slate-50 transition text-slate-700 min-h-[36px] inline-flex items-center justify-center shadow-xs"
                   >
                     {q.isPremium && !hasLifetimeAccess ? 'Unlock ₹20' : 'Practice'}
                   </Link>
@@ -217,7 +217,7 @@ export default function LandingPage() {
             </p>
 
             <div className="py-6">
-              <div className="inline-block bg-white/10 backdrop-blur-md rounded-2xl px-8 py-4 border border-white/20">
+              <div className="inline-block bg-white/10 backdrop-blur-md rounded-2xl px-5 sm:px-8 py-4 border border-white/20 max-w-full">
                 <div className="flex items-baseline justify-center space-x-3">
                   <span className="text-2xl sm:text-3xl text-slate-400 line-through font-bold">₹100</span>
                   <span className="text-4xl sm:text-5xl font-black text-visa-gold">₹20</span>

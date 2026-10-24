@@ -200,8 +200,8 @@ export default function QuestionsPage() {
               type="text"
               value={search}
               onChange={handleSearchChange}
-              placeholder="Search by title (e.g. Text Justification, LRU Cache, Two Sum)..."
-              className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-visa-blue/20 focus:border-visa-blue transition"
+              placeholder="Search by title (e.g. LRU Cache, Two Sum)..."
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-visa-blue/20 focus:border-visa-blue transition"
             />
           </div>
 
@@ -210,7 +210,7 @@ export default function QuestionsPage() {
             <select
               value={difficulty}
               onChange={(e) => handleDifficultyChange(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-visa-blue/20 focus:border-visa-blue transition bg-white"
+              className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-visa-blue/20 focus:border-visa-blue transition bg-white"
             >
               <option value="All">All Difficulties</option>
               <option value="Easy">Easy</option>
@@ -224,7 +224,7 @@ export default function QuestionsPage() {
             <select
               value={topic}
               onChange={(e) => handleTopicChange(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-visa-blue/20 focus:border-visa-blue transition bg-white"
+              className="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-visa-blue/20 focus:border-visa-blue transition bg-white"
             >
               {POPULAR_TOPICS.map((t) => (
                 <option key={t} value={t}>
@@ -272,18 +272,18 @@ export default function QuestionsPage() {
               return (
                 <div
                   key={q.questionId}
-                  className={`p-4 sm:p-5 flex items-center justify-between gap-4 transition hover:bg-slate-50/80 ${
+                  className={`p-3.5 sm:p-5 flex items-center justify-between gap-2.5 sm:gap-4 transition hover:bg-slate-50/80 ${
                     isSolved ? 'bg-emerald-50/20' : ''
                   }`}
                 >
-                  <div className="flex items-center space-x-3.5 min-w-0">
-                    {/* Solved toggle checkbox */}
+                  <div className="flex items-center space-x-2.5 sm:space-x-3.5 min-w-0">
+                    {/* Solved toggle checkbox with generous touch target */}
                     <button
                       onClick={() => handleToggleSolved(q.questionId, q.status)}
                       title={isAuthenticated ? 'Click to toggle solved' : 'Sign in to track progress'}
                       disabled={!isAuthenticated}
-                      className={`flex-shrink-0 transition ${
-                        !isAuthenticated ? 'cursor-not-allowed opacity-40' : 'hover:scale-110'
+                      className={`flex-shrink-0 min-w-[36px] min-h-[36px] flex items-center justify-center -ml-1 transition ${
+                        !isAuthenticated ? 'cursor-not-allowed opacity-40' : 'hover:scale-110 active:scale-95'
                       }`}
                     >
                       {isSolved ? (
@@ -293,7 +293,7 @@ export default function QuestionsPage() {
                       )}
                     </button>
 
-                    <div className="space-y-1.5 min-w-0">
+                    <div className="space-y-1 min-w-0">
                       <div className="flex items-center space-x-2 flex-wrap gap-y-1">
                         {q.leetcodeId && !q.isBlurred && (
                           <span className="text-xs font-mono font-bold text-slate-400">
@@ -350,7 +350,8 @@ export default function QuestionsPage() {
                         </span>
                         <span>•</span>
                         <div className="flex items-center space-x-1.5 flex-wrap gap-y-1">
-                          {q.topics.slice(0, 4).map((t) => (
+                          {/* Show top 2 on mobile, next 2 on desktop */}
+                          {q.topics.slice(0, 2).map((t) => (
                             <span
                               key={t}
                               className="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-medium"
@@ -358,9 +359,19 @@ export default function QuestionsPage() {
                               {t}
                             </span>
                           ))}
-                          {q.topics.length > 4 && (
+                          {q.topics.slice(2, 4).map((t) => (
+                            <span
+                              key={t}
+                              className="hidden sm:inline-flex px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-medium"
+                            >
+                              {t}
+                            </span>
+                          ))}
+                          {q.topics.length > 4 ? (
                             <span className="text-[10px] text-slate-400">+{q.topics.length - 4} more</span>
-                          )}
+                          ) : q.topics.length > 2 ? (
+                            <span className="sm:hidden text-[10px] text-slate-400">+{q.topics.length - 2} more</span>
+                          ) : null}
                         </div>
                       </div>
                     </div>
@@ -374,7 +385,7 @@ export default function QuestionsPage() {
                         target="_blank"
                         rel="noopener noreferrer"
                         title="Practice on LeetCode"
-                        className="hidden sm:inline-flex items-center space-x-1 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition"
+                        className="hidden md:inline-flex items-center space-x-1 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition min-h-[36px]"
                       >
                         <span>Solve</span>
                         <ExternalLink className="w-3.5 h-3.5" />
@@ -384,7 +395,7 @@ export default function QuestionsPage() {
                     {isLocked ? (
                       <Link
                         to="/checkout"
-                        className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 transition flex items-center space-x-1.5 shadow-sm"
+                        className="px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-600 active:scale-95 text-slate-950 transition flex items-center space-x-1.5 shadow-sm min-h-[36px]"
                       >
                         <Lock className="w-3.5 h-3.5" />
                         <span>Unlock ₹20</span>
@@ -392,7 +403,7 @@ export default function QuestionsPage() {
                     ) : (
                       <Link
                         to={`/questions/${q.questionId}`}
-                        className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-visa-blue hover:bg-visa-lightBlue text-white transition flex items-center space-x-1 shadow-sm"
+                        className="px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-bold bg-visa-blue hover:bg-visa-lightBlue active:scale-95 text-white transition flex items-center space-x-1 shadow-sm min-h-[36px]"
                       >
                         <span>Notes</span>
                         <ChevronRight className="w-3.5 h-3.5" />
@@ -407,12 +418,12 @@ export default function QuestionsPage() {
 
         {/* Hidden Premium Questions Banner for Unpaid Users */}
         {!hasLifetimeAccess && totalPremiumHidden > 0 && (
-          <div className="p-8 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border-t border-amber-200/80 text-center space-y-4">
+          <div className="p-6 sm:p-8 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border-t border-amber-200/80 text-center space-y-4">
             <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mx-auto shadow-sm">
               <Lock className="w-6 h-6" />
             </div>
             <div className="max-w-md mx-auto space-y-1">
-              <h3 className="text-lg font-bold text-slate-900">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900">
                 {totalPremiumHidden} Premium Visa Questions Hidden
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
@@ -421,7 +432,7 @@ export default function QuestionsPage() {
             </div>
             <Link
               to="/checkout"
-              className="inline-flex items-center space-x-2 px-6 py-2.5 rounded-xl bg-visa-blue hover:bg-visa-lightBlue text-white font-bold text-xs transition shadow-md"
+              className="inline-flex items-center space-x-2 px-6 py-2.5 rounded-xl bg-visa-blue hover:bg-visa-lightBlue text-white font-bold text-xs transition shadow-md min-h-[40px]"
             >
               <span>Unlock Full Question Bank (₹20)</span>
               <Sparkles className="w-3.5 h-3.5 text-visa-gold" />
@@ -431,7 +442,7 @@ export default function QuestionsPage() {
 
         {/* Pagination Footer */}
         {pagination.totalPages > 1 && (
-          <div className="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+          <div className="p-3.5 sm:p-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
             <span className="text-xs text-slate-500">
               Showing page <strong>{pagination.page}</strong> of <strong>{pagination.totalPages}</strong> ({pagination.total} total questions)
             </span>
@@ -439,14 +450,19 @@ export default function QuestionsPage() {
               <button
                 disabled={pagination.page <= 1}
                 onClick={() => handlePageChange(pagination.page - 1)}
-                className="p-1.5 rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 disabled:opacity-40 transition"
+                aria-label="Previous page"
+                className="p-2 rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 disabled:opacity-40 transition min-w-[36px] min-h-[36px] flex items-center justify-center"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
+              <span className="text-xs font-bold text-slate-700 px-2 sm:hidden">
+                {pagination.page} / {pagination.totalPages}
+              </span>
               <button
                 disabled={pagination.page >= pagination.totalPages}
                 onClick={() => handlePageChange(pagination.page + 1)}
-                className="p-1.5 rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 disabled:opacity-40 transition"
+                aria-label="Next page"
+                className="p-2 rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 disabled:opacity-40 transition min-w-[36px] min-h-[36px] flex items-center justify-center"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

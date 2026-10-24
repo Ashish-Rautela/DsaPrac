@@ -328,7 +328,7 @@ At the end, score my correctness, problem-solving, communication and technical d
 
             {/* Planning Scenarios Table */}
             <div className="overflow-x-auto rounded-2xl border border-slate-200">
-              <table className="w-full text-left text-sm">
+              <table className="w-full min-w-[460px] text-left text-sm">
                 <thead className="bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider">
                   <tr>
                     <th className="py-3 px-4">Time Available After Notification</th>
@@ -480,7 +480,7 @@ At the end, score my correctness, problem-solving, communication and technical d
 
             {/* Representative Problem Types */}
             <div className="overflow-x-auto rounded-2xl border border-slate-200 pt-2">
-              <table className="w-full text-left text-sm">
+              <table className="w-full min-w-[500px] text-left text-sm">
                 <thead className="bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider">
                   <tr>
                     <th className="py-3 px-4">Representative Visa OA Pattern</th>
@@ -647,7 +647,7 @@ At the end, score my correctness, problem-solving, communication and technical d
                     </button>
                   </div>
 
-                  <div className="p-4 bg-slate-950 text-slate-100 font-mono text-xs overflow-x-auto whitespace-pre-wrap leading-relaxed select-all">
+                  <div className="p-4 bg-slate-950 text-slate-100 font-mono text-[11px] sm:text-xs overflow-x-auto whitespace-pre-wrap break-words leading-relaxed select-all">
                     {prompt.text}
                   </div>
                 </div>
