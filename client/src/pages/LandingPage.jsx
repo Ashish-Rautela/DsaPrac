@@ -225,7 +225,15 @@ export default function LandingPage() {
             <ul className="text-sm text-slate-200 space-y-2 text-left max-w-sm mx-auto">
               <li className="flex items-center">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0" />
-                <span>All curated Visa OA problems & solutions</span>
+                <span>All 160+ curated Visa OA problems & solutions</span>
+              </li>
+              <li className="flex items-center">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0" />
+                <span>7-Day Tactical OA Roadmap & Timeline Strategy</span>
+              </li>
+              <li className="flex items-center">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0" />
+                <span>4 Copyable Socratic AI Master Prompts</span>
               </li>
               <li className="flex items-center">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0" />
@@ -233,7 +241,7 @@ export default function LandingPage() {
               </li>
               <li className="flex items-center">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0" />
-                <span>Personal question progress tracking</span>
+                <span>Core CS fundamentals & Project interview guide</span>
               </li>
               <li className="flex items-center">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0" />

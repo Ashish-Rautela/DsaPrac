@@ -11,6 +11,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import QuestionsPage from './pages/QuestionsPage';
 import QuestionDetailPage from './pages/QuestionDetailPage';
+import PrepPlanPage from './pages/PrepPlanPage';
 import CheckoutPage from './pages/CheckoutPage';
 import PaymentStatusPage from './pages/PaymentStatusPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
@@ -30,6 +31,7 @@ export default function App() {
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/questions" element={<QuestionsPage />} />
               <Route path="/questions/:id" element={<QuestionDetailPage />} />
+              <Route path="/prep-plan" element={<PrepPlanPage />} />
 
               {/* Protected Student Routes */}
               <Route

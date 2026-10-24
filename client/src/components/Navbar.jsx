@@ -13,6 +13,7 @@ import {
   X,
   CreditCard,
   Lock,
+  BookOpen,
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -59,6 +60,27 @@ export default function Navbar() {
               }`}
             >
               Question Bank
+            </Link>
+
+            <Link
+              to="/prep-plan"
+              className={`px-3.5 py-2 rounded-lg text-sm font-medium transition flex items-center space-x-1.5 ${
+                isActive('/prep-plan')
+                  ? 'bg-slate-100 text-visa-blue font-semibold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+              }`}
+            >
+              <BookOpen className="w-4 h-4 text-visa-blue" />
+              <span>Prep Plan</span>
+              {!hasLifetimeAccess ? (
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-bold flex items-center">
+                  <Lock className="w-2.5 h-2.5 mr-0.5" /> PRO
+                </span>
+              ) : (
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold flex items-center">
+                  <CheckCircle className="w-2.5 h-2.5 mr-0.5" /> UNLOCKED
+                </span>
+              )}
             </Link>
 
             {isAuthenticated && !hasLifetimeAccess && (
@@ -177,6 +199,25 @@ export default function Navbar() {
             className="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100"
           >
             Question Bank
+          </Link>
+          <Link
+            to="/prep-plan"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center justify-between px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100"
+          >
+            <div className="flex items-center space-x-2">
+              <BookOpen className="w-4 h-4 text-visa-blue" />
+              <span>Prep Plan</span>
+            </div>
+            {!hasLifetimeAccess ? (
+              <span className="text-[10px] px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold flex items-center">
+                <Lock className="w-2.5 h-2.5 mr-1" /> PRO
+              </span>
+            ) : (
+              <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold flex items-center">
+                <CheckCircle className="w-2.5 h-2.5 mr-1" /> UNLOCKED
+              </span>
+            )}
           </Link>
           {isAuthenticated && (
             <>
