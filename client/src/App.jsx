@@ -20,7 +20,7 @@ export default function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <AuthProvider>
-        <div className="flex flex-col min-h-screen bg-slate-50 text-slate-800">
+        <div className="flex flex-col min-h-screen bg-[#f0f4f9] text-slate-800">
           <UrgencyBanner />
           <Navbar />
           <main className="flex-1">

@@ -9,7 +9,7 @@
   }
 
   body {
-    @apply antialiased text-slate-800 bg-slate-50 selection:bg-amber-200 selection:text-amber-900;
+    @apply antialiased text-slate-800 bg-[#f0f4f9] selection:bg-amber-200 selection:text-amber-900;
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
   }
