@@ -41,6 +41,11 @@ export default function AdminDashboardPage() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(null);
 
+  // Approved payments counter & pagination state
+  const [approvedCount, setApprovedCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
   // Questions state
   const [questions, setQuestions] = useState([]);
   const [questionsLoading, setQuestionsLoading] = useState(true);
@@ -62,6 +67,17 @@ export default function AdminDashboardPage() {
     setTimeout(() => setNotification(null), 4000);
   };
 
+  const loadApprovedCount = async () => {
+    try {
+      const data = await paymentApi.listAdminPayments('approved');
+      if (data && data.payments) {
+        setApprovedCount(data.payments.length);
+      }
+    } catch {
+      // silent
+    }
+  };
+
   const loadPayments = async (silent = false) => {
     if (!silent) setPaymentsLoading(true);
     setIsRefreshing(true);
@@ -69,8 +85,13 @@ export default function AdminDashboardPage() {
       const data = await paymentApi.listAdminPayments(
         paymentFilter === 'all' ? null : paymentFilter
       );
-      setPayments(data.payments || []);
+      const list = data.payments || [];
+      setPayments(list);
       setLastUpdated(new Date());
+
+      if (paymentFilter === 'approved') {
+        setApprovedCount(list.length);
+      }
     } catch (err) {
       if (!silent) {
         showNotification('error', err.message || 'Failed to load payments.');
@@ -93,6 +114,16 @@ export default function AdminDashboardPage() {
     }
   };
 
+  // Sync approved count on initial mount
+  useEffect(() => {
+    loadApprovedCount();
+  }, []);
+
+  // Reset pagination page whenever filter or page size changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [paymentFilter, pageSize]);
+
   useEffect(() => {
     if (activeTab === 'payments') {
       loadPayments();
@@ -109,6 +140,9 @@ export default function AdminDashboardPage() {
       // Don't auto-fetch if modal is open or an action is currently processing
       if (rejectModalPayment || screenshotModalPayment || actionLoadingId) return;
       loadPayments(true);
+      if (paymentFilter !== 'approved') {
+        loadApprovedCount();
+      }
     }, 5000);
 
     return () => clearInterval(interval);
@@ -124,7 +158,9 @@ export default function AdminDashboardPage() {
     try {
       await paymentApi.approve(paymentId);
       showNotification('success', 'Payment approved and lifetime access unlocked.');
+      setApprovedCount((prev) => prev + 1);
       loadPayments();
+      loadApprovedCount();
     } catch (err) {
       showNotification('error', err.message || 'Approval failed.');
     } finally {
@@ -204,6 +240,17 @@ export default function AdminDashboardPage() {
     }
   };
 
+  // Pagination calculations for approved payments
+  const isApprovedTab = paymentFilter === 'approved';
+  const totalItems = payments.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+  const safeCurrentPage = Math.min(Math.max(currentPage, 1), totalPages);
+  const startIndex = (safeCurrentPage - 1) * pageSize;
+  const endIndex = Math.min(startIndex + pageSize, totalItems);
+  const displayedPayments = isApprovedTab
+    ? payments.slice(startIndex, endIndex)
+    : payments;
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
       {/* Admin Header */}
@@ -282,13 +329,24 @@ export default function AdminDashboardPage() {
                 <button
                   key={f}
                   onClick={() => setPaymentFilter(f)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold capitalize transition ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold capitalize transition flex items-center space-x-1.5 ${
                     paymentFilter === f
-                      ? 'bg-slate-900 text-white'
+                      ? 'bg-slate-900 text-white shadow-xs'
                       : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                   }`}
                 >
-                  {f}
+                  <span>{f}</span>
+                  {f === 'approved' && approvedCount > 0 && (
+                    <span
+                      className={`px-1.5 py-0.2 rounded-full text-[10px] font-extrabold ${
+                        paymentFilter === 'approved'
+                          ? 'bg-emerald-500 text-white'
+                          : 'bg-emerald-100 text-emerald-800'
+                      }`}
+                    >
+                      {approvedCount}
+                    </span>
+                  )}
                 </button>
               ))}
             </div>
@@ -335,6 +393,41 @@ export default function AdminDashboardPage() {
             </div>
           </div>
 
+          {/* Total Approved Payments Counter Card */}
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center flex-shrink-0 font-bold shadow-xs">
+                <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+              </div>
+              <div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                    Total Approved Payments
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold border border-emerald-200/60">
+                    Lifetime Unlocked
+                  </span>
+                </div>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 flex items-baseline space-x-2 mt-0.5">
+                  <span>{approvedCount}</span>
+                  <span className="text-xs sm:text-sm font-semibold text-slate-500">
+                    verified students • ₹{approvedCount * 20} INR collected
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {isApprovedTab && totalItems > 0 && (
+              <div className="flex items-center space-x-2 text-xs font-semibold text-slate-600 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl self-stretch sm:self-auto justify-between sm:justify-start">
+                <span>
+                  Showing {startIndex + 1}–{endIndex} of {totalItems}
+                </span>
+                <span className="text-slate-400">•</span>
+                <span className="font-bold text-slate-900">Page {safeCurrentPage} of {totalPages}</span>
+              </div>
+            )}
+          </div>
+
           {/* Payments Table */}
           <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
             {paymentsLoading ? (
@@ -345,7 +438,8 @@ export default function AdminDashboardPage() {
                 <p className="text-xs text-slate-400">All submissions in this category have been processed.</p>
               </div>
             ) : (
-              <div className="overflow-x-auto">
+              <>
+                <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
                     <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider">
@@ -359,7 +453,7 @@ export default function AdminDashboardPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 text-slate-700">
-                    {payments.map((p) => {
+                    {displayedPayments.map((p) => {
                       const isPending = p.status === 'pending';
                       const isLoading = actionLoadingId === p.paymentId;
 
@@ -452,10 +546,95 @@ export default function AdminDashboardPage() {
                   </tbody>
                 </table>
               </div>
-            )}
-          </div>
+
+              {/* Pagination Controls for Approved Payments */}
+              {isApprovedTab && totalItems > 0 && (
+                <div className="bg-slate-50/80 border-t border-slate-200 px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <div className="text-xs text-slate-600 font-medium">
+                    Showing <span className="font-bold text-slate-900">{startIndex + 1}</span> to{' '}
+                    <span className="font-bold text-slate-900">{endIndex}</span> of{' '}
+                    <span className="font-bold text-slate-900">{totalItems}</span> approved payments
+                  </div>
+
+                  <div className="flex items-center flex-wrap gap-2">
+                    {/* Rows per page selector */}
+                    <div className="flex items-center space-x-1.5 mr-2">
+                      <span className="text-[11px] text-slate-500 font-medium">Per page:</span>
+                      <select
+                        value={pageSize}
+                        onChange={(e) => setPageSize(Number(e.target.value))}
+                        className="text-xs border border-slate-200 rounded-lg px-2 py-1 bg-white text-slate-700 font-bold focus:outline-none focus:ring-1 focus:ring-slate-400 cursor-pointer shadow-xs"
+                      >
+                        <option value={10}>10</option>
+                        <option value={25}>25</option>
+                        <option value={50}>50</option>
+                        <option value={100}>100</option>
+                      </select>
+                    </div>
+
+                    {/* Previous Page */}
+                    <button
+                      type="button"
+                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                      disabled={safeCurrentPage <= 1}
+                      className="px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold transition disabled:opacity-40 disabled:cursor-not-allowed shadow-xs"
+                    >
+                      Previous
+                    </button>
+
+                    {/* Page Numbers */}
+                    <div className="flex items-center space-x-1">
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
+                        if (
+                          totalPages > 6 &&
+                          pageNum !== 1 &&
+                          pageNum !== totalPages &&
+                          Math.abs(pageNum - safeCurrentPage) > 1
+                        ) {
+                          if (pageNum === 2 || pageNum === totalPages - 1) {
+                            return (
+                              <span key={pageNum} className="text-slate-400 px-1 text-xs select-none">
+                                ...
+                              </span>
+                            );
+                          }
+                          return null;
+                        }
+
+                        return (
+                          <button
+                            key={pageNum}
+                            type="button"
+                            onClick={() => setCurrentPage(pageNum)}
+                            className={`w-7 h-7 rounded-lg text-xs font-bold transition flex items-center justify-center ${
+                              safeCurrentPage === pageNum
+                                ? 'bg-slate-900 text-white shadow-xs'
+                                : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Next Page */}
+                    <button
+                      type="button"
+                      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                      disabled={safeCurrentPage >= totalPages}
+                      className="px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold transition disabled:opacity-40 disabled:cursor-not-allowed shadow-xs"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
         </div>
-      )}
+      </div>
+    )}
 
       {/* ========================================================================
           TAB 2: QUESTION MANAGEMENT
