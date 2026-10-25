@@ -35,7 +35,7 @@ jobs:
   deploy:
     name: Deploy to EC2
     needs: test
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
 
     steps:
@@ -52,8 +52,9 @@ jobs:
           script: |
             set -e
             APP_DIR="${{ secrets.EC2_APP_DIR || '/var/www/visa-server' }}"
+            TARGET_BRANCH="${{ github.ref_name }}"
             
-            echo "==> Deploying backend to $APP_DIR on EC2..."
+            echo "==> Deploying backend ($TARGET_BRANCH) to $APP_DIR on EC2..."
             
             # Ensure target directory exists
             sudo mkdir -p "$APP_DIR"
@@ -63,10 +64,10 @@ jobs:
 
             # If git repo already initialized, pull latest; otherwise clone
             if [ -d .git ]; then
-              git fetch origin main
-              git reset --hard origin/main
+              git fetch origin "$TARGET_BRANCH"
+              git reset --hard "origin/$TARGET_BRANCH"
             else
-              git clone https://github.com/${{ github.repository }}.git .
+              git clone -b "$TARGET_BRANCH" https://github.com/${{ github.repository }}.git .
             fi
 
             # Install production dependencies

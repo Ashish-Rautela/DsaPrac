@@ -45,9 +45,13 @@ class PaymentController {
 
   async listAdminPayments(req, res, next) {
     try {
-      const { status } = req.query;
-      const payments = await paymentService.listPaymentsForAdmin(status || null);
-      return res.status(200).json({ payments });
+      const { status, page, limit } = req.query;
+      const result = await paymentService.listPaymentsForAdmin({
+        status: status || null,
+        page: page ? parseInt(page, 10) : null,
+        limit: limit ? parseInt(limit, 10) : null,
+      });
+      return res.status(200).json(result);
     } catch (err) {
       next(err);
     }

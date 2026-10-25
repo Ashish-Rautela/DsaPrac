@@ -70,8 +70,51 @@ class PaymentService {
     return paymentRepository.listByUser(userId);
   }
 
-  async listPaymentsForAdmin(status = null) {
-    return paymentRepository.listAll(status);
+  async listPaymentsForAdmin(options = null) {
+    let status = null;
+    let page = null;
+    let limit = null;
+
+    if (options && typeof options === 'object') {
+      status = options.status || null;
+      page = options.page || null;
+      limit = options.limit || null;
+    } else if (typeof options === 'string') {
+      status = options;
+    }
+
+    const allItems = await paymentRepository.listAll(status);
+    const total = allItems.length;
+
+    let approvedCount;
+    if (status === PAYMENT_STATUS.APPROVED) {
+      approvedCount = total;
+    } else {
+      approvedCount = await paymentRepository.countByStatus(PAYMENT_STATUS.APPROVED);
+    }
+
+    if (page && limit) {
+      const pageNum = Math.max(1, parseInt(page, 10));
+      const limitNum = Math.max(1, parseInt(limit, 10));
+      const totalPages = Math.max(1, Math.ceil(total / limitNum));
+      const startIndex = (pageNum - 1) * limitNum;
+      const paginatedItems = allItems.slice(startIndex, startIndex + limitNum);
+
+      return {
+        payments: paginatedItems,
+        total,
+        page: pageNum,
+        limit: limitNum,
+        totalPages,
+        approvedCount,
+      };
+    }
+
+    return {
+      payments: allItems,
+      total,
+      approvedCount,
+    };
   }
 
   async approvePayment(paymentId, adminIdentifier) {

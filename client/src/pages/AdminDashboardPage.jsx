@@ -45,6 +45,8 @@ export default function AdminDashboardPage() {
   const [approvedCount, setApprovedCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [backendTotal, setBackendTotal] = useState(0);
+  const [backendTotalPages, setBackendTotalPages] = useState(1);
 
   // Questions state
   const [questions, setQuestions] = useState([]);
@@ -70,7 +72,11 @@ export default function AdminDashboardPage() {
   const loadApprovedCount = async () => {
     try {
       const data = await paymentApi.listAdminPayments('approved');
-      if (data && data.payments) {
+      if (data && data.approvedCount !== undefined) {
+        setApprovedCount(data.approvedCount);
+      } else if (data && data.total !== undefined) {
+        setApprovedCount(data.total);
+      } else if (data && data.payments) {
         setApprovedCount(data.payments.length);
       }
     } catch {
@@ -82,15 +88,32 @@ export default function AdminDashboardPage() {
     if (!silent) setPaymentsLoading(true);
     setIsRefreshing(true);
     try {
-      const data = await paymentApi.listAdminPayments(
-        paymentFilter === 'all' ? null : paymentFilter
-      );
+      const isApproved = paymentFilter === 'approved';
+      const params = isApproved
+        ? { status: 'approved', page: currentPage, limit: pageSize }
+        : { status: paymentFilter === 'all' ? null : paymentFilter };
+
+      const data = await paymentApi.listAdminPayments(params);
       const list = data.payments || [];
       setPayments(list);
       setLastUpdated(new Date());
 
-      if (paymentFilter === 'approved') {
-        setApprovedCount(list.length);
+      if (data.total !== undefined) {
+        setBackendTotal(data.total);
+      } else {
+        setBackendTotal(list.length);
+      }
+
+      if (data.totalPages !== undefined) {
+        setBackendTotalPages(data.totalPages);
+      } else {
+        setBackendTotalPages(Math.max(1, Math.ceil((data.total || list.length) / pageSize)));
+      }
+
+      if (data.approvedCount !== undefined) {
+        setApprovedCount(data.approvedCount);
+      } else if (isApproved) {
+        setApprovedCount(data.total !== undefined ? data.total : list.length);
       }
     } catch (err) {
       if (!silent) {
@@ -130,7 +153,7 @@ export default function AdminDashboardPage() {
     } else {
       loadQuestions();
     }
-  }, [activeTab, paymentFilter]);
+  }, [activeTab, paymentFilter, currentPage, pageSize]);
 
   // Background Auto-Refresh interval (every 5 seconds)
   useEffect(() => {
@@ -242,12 +265,12 @@ export default function AdminDashboardPage() {
 
   // Pagination calculations for approved payments
   const isApprovedTab = paymentFilter === 'approved';
-  const totalItems = payments.length;
-  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+  const totalItems = backendTotal || payments.length;
+  const totalPages = backendTotalPages || Math.max(1, Math.ceil(totalItems / pageSize));
   const safeCurrentPage = Math.min(Math.max(currentPage, 1), totalPages);
   const startIndex = (safeCurrentPage - 1) * pageSize;
   const endIndex = Math.min(startIndex + pageSize, totalItems);
-  const displayedPayments = isApprovedTab
+  const displayedPayments = isApprovedTab && payments.length > pageSize
     ? payments.slice(startIndex, endIndex)
     : payments;
 

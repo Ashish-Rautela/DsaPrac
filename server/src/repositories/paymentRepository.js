@@ -147,32 +147,57 @@ class PaymentRepository {
   async listAll(statusFilter = null) {
     if (statusFilter) {
       try {
-        const result = await docClient.send(
-          new QueryCommand({
-            TableName: this.paymentsTable,
-            IndexName: 'StatusPaymentsIndex',
-            KeyConditionExpression: '#status = :status',
-            ExpressionAttributeNames: {
-              '#status': 'status',
-            },
-            ExpressionAttributeValues: {
-              ':status': statusFilter,
-            },
-            ScanIndexForward: false,
-          })
-        );
-        return result.Items || [];
+        let allItems = [];
+        let lastEvaluatedKey = undefined;
+
+        do {
+          const result = await docClient.send(
+            new QueryCommand({
+              TableName: this.paymentsTable,
+              IndexName: 'StatusPaymentsIndex',
+              KeyConditionExpression: '#status = :status',
+              ExpressionAttributeNames: {
+                '#status': 'status',
+              },
+              ExpressionAttributeValues: {
+                ':status': statusFilter,
+              },
+              ScanIndexForward: false,
+              ExclusiveStartKey: lastEvaluatedKey,
+            })
+          );
+
+          if (result.Items && result.Items.length > 0) {
+            allItems.push(...result.Items);
+          }
+          lastEvaluatedKey = result.LastEvaluatedKey;
+        } while (lastEvaluatedKey);
+
+        allItems.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+        return allItems;
       } catch (err) {
         // Fallback scan
       }
     }
 
-    const result = await docClient.send(
-      new ScanCommand({
-        TableName: this.paymentsTable,
-      })
-    );
-    let items = (result.Items || []).filter(
+    let allItems = [];
+    let lastEvaluatedKey = undefined;
+
+    do {
+      const result = await docClient.send(
+        new ScanCommand({
+          TableName: this.paymentsTable,
+          ExclusiveStartKey: lastEvaluatedKey,
+        })
+      );
+
+      if (result.Items && result.Items.length > 0) {
+        allItems.push(...result.Items);
+      }
+      lastEvaluatedKey = result.LastEvaluatedKey;
+    } while (lastEvaluatedKey);
+
+    let items = allItems.filter(
       (item) => item.PK && item.PK.startsWith('PAYMENT#')
     );
 
@@ -182,6 +207,39 @@ class PaymentRepository {
 
     items.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
     return items;
+  }
+
+  async countByStatus(status) {
+    if (!status) return 0;
+    try {
+      let count = 0;
+      let lastEvaluatedKey = undefined;
+
+      do {
+        const result = await docClient.send(
+          new QueryCommand({
+            TableName: this.paymentsTable,
+            IndexName: 'StatusPaymentsIndex',
+            KeyConditionExpression: '#status = :status',
+            ExpressionAttributeNames: {
+              '#status': 'status',
+            },
+            ExpressionAttributeValues: {
+              ':status': status,
+            },
+            Select: 'COUNT',
+            ExclusiveStartKey: lastEvaluatedKey,
+          })
+        );
+        count += (result.Count || 0);
+        lastEvaluatedKey = result.LastEvaluatedKey;
+      } while (lastEvaluatedKey);
+
+      return count;
+    } catch (err) {
+      const items = await this.listAll(status);
+      return items.length;
+    }
   }
 
   async approvePaymentAtomically(paymentId, userId, adminIdentifier) {

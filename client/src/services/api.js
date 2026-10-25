@@ -86,8 +86,24 @@ export const paymentApi = {
   getConfig: () => request('/payments/config', { method: 'GET' }),
   submit: (payload) => request('/payments', { method: 'POST', body: payload }),
   getMyPayments: () => request('/payments/me', { method: 'GET' }),
-  listAdminPayments: (status) => {
-    const query = status ? `?status=${encodeURIComponent(status)}` : '';
+  listAdminPayments: (params) => {
+    let query = '';
+    if (typeof params === 'string') {
+      query = params && params !== 'all' ? `?status=${encodeURIComponent(params)}` : '';
+    } else if (params && typeof params === 'object') {
+      const searchParams = new URLSearchParams();
+      if (params.status && params.status !== 'all') {
+        searchParams.set('status', params.status);
+      }
+      if (params.page) {
+        searchParams.set('page', params.page);
+      }
+      if (params.limit) {
+        searchParams.set('limit', params.limit);
+      }
+      const str = searchParams.toString();
+      query = str ? `?${str}` : '';
+    }
     return request(`/admin/payments${query}`, { method: 'GET' });
   },
   approve: (id) => request(`/admin/payments/${id}/approve`, { method: 'PATCH' }),
