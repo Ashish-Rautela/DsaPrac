@@ -66,6 +66,10 @@ export default function Footer() {
             <span>Launch Offer ₹20</span>
           </div>
         </div>
+
+        <p className="mt-4 text-[11px] text-slate-400/90 text-center sm:text-left leading-relaxed border-t border-slate-100/60 pt-3">
+          <span className="font-semibold text-slate-500">Notice:</span> This is not an official college website. This is a personal website made to help students practice Visa OA questions.
+        </p>
       </div>
     </footer>
   );
