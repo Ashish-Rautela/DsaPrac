@@ -315,6 +315,10 @@ export default function CheckoutPage() {
                 <span className="text-slate-500 font-medium">Total Amount to Pay</span>
                 <span className="font-black text-base text-emerald-950 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-lg shadow-xs">₹20 INR</span>
               </div>
+              <div className="flex items-center justify-between border-t border-slate-100 pt-2 text-[11px]">
+                <span className="text-slate-500 font-medium">Refund Policy</span>
+                <span className="font-bold text-rose-600">Strictly Non-refundable</span>
+              </div>
             </div>
           </div>
 
@@ -436,6 +440,14 @@ export default function CheckoutPage() {
                 </p>
                 <p className="text-amber-800 leading-relaxed">
                   After you submit your screenshot, an admin will review the payment and activate your lifetime access.
+                </p>
+              </div>
+
+              {/* Disclaimer Notice */}
+              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 text-[11px] text-slate-500 flex items-start space-x-2">
+                <AlertCircle className="w-3.5 h-3.5 text-rose-500 flex-shrink-0 mt-0.5" />
+                <p className="leading-relaxed">
+                  <span className="font-bold text-slate-700">Disclaimer:</span> Once paid, no refund can be processed. All purchases are final and grant permanent lifetime access.
                 </p>
               </div>
 
